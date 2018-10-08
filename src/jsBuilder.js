@@ -1,24 +1,24 @@
 import { Platform } from 'react-native';
 
 const toString = (obj) => {
-    let result = JSON.stringify(obj, (key, val) => {
+    let result = JSON.stringify(obj, function (key, val) {
         if (typeof val === 'function') {
             return `~ha~${val}~ha~`;
         }
         return val;
     });
+
     do {
-        result = result.replace('\"~ha~', '').replace('~h  a~\"', '').replace(/\\n/g, '').replace(/\\\"/g, '"');// 最后一个replace将release模式中莫名生成的\"转换成"
+        result = result.replace('\"~ha~', '').replace('~ha~\"', '').replace(/\\n/g, '').replace(/\\\"/g, "\"");
     } while (result.indexOf('~ha~') >= 0);
     return result;
-};
+}
 
 export const getJavascriptSource = (props) => {
-    let { option } = props;
     const { OS } = Platform;
     return `
         var chart = echarts.init(document.getElementById('main'));
-        chart.setOption(${toString(option)});
+        chart.setOption(${toString(props.option)});
 
         function sendData(data) {
             window.postMessage(JSON.stringify({"types":"DATA","payload": data}));
