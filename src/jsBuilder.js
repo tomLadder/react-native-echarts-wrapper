@@ -15,11 +15,10 @@ const toString = (obj) => {
 }
 
 export const getJavascriptSource = (props) => {
-    let { option } = props;
     const { OS } = Platform;
     return `
         var chart = echarts.init(document.getElementById('main'));
-        chart.setOption(${toString(option)});
+        chart.setOption(${toString(props.option)});
 
         function sendData(data) {
             window.postMessage(JSON.stringify({"types":"DATA","payload": data}));
