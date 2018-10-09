@@ -28,7 +28,7 @@
 
 ![screenshot](https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/develope/images/dynamic.png)
 
-## Screenshots
+# Screenshots
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/develope/images/custom.png" width="200">
@@ -36,8 +36,13 @@
 <img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/develope/images/simple.png" width="200">
 </p>
 
-## How To Use
+# How To Use
+```bash
+$ npm install react-native-echarts-wrapper --save
+```
 
+
+## Example
 To clone and run this application, you'll need [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)), [React-Native-Cli](https://facebook.github.io/react-native/docs/getting-started.html), [XCode](https://itunes.apple.com/at/app/xcode/id497799835?mt=12) and [Android-Studio](https://developer.android.com/studio/) installed on your computer.
 
 From your command line:
@@ -59,7 +64,7 @@ $ react-native run-android
 $ react-native run-ios
 ```
 
-## Authors
+# Authors
 
 [<img alt="Thomas Leiter" src="https://avatars3.githubusercontent.com/u/20393156?s=400&u=ae0a43de5d81d58a698abffe4e2ede024f2b6700&v=4" width="117">](https://github.com/tomLadder) |
 :---:
