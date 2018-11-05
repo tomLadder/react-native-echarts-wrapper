@@ -64,6 +64,10 @@ $ react-native run-android
 $ react-native run-ios
 ```
 
+## [1.0.4] - Monday, 5.Nov 2018
+### Fixed
+- Functions in options do not work when setting via 'setOptions'
+
 # Authors
 
 [<img alt="Thomas Leiter" src="https://avatars3.githubusercontent.com/u/20393156?s=400&u=ae0a43de5d81d58a698abffe4e2ede024f2b6700&v=4" width="117">](https://github.com/tomLadder) |
