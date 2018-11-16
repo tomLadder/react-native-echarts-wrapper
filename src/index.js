@@ -9,8 +9,36 @@ class ECharts extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-
     this.onGetHeight = null;
+
+    this.html = `
+    <!DOCTYPE html>
+    <html lang="de">
+
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+        <style type="text/css">
+          html,body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color:rgba(0, 0, 0, 0);
+          }
+          #main {
+            height: 100%;
+            background-color:rgba(0, 0, 0, 0);
+          }
+          </style>
+          <script src="${this.props.baseUrl}/echarts.min.js"></script>
+        </head>
+
+    <body>
+        <div id="main"></div>
+    </body>
+
+    </html>`;
   }
 
   onMessage = (e) => {
@@ -54,10 +82,18 @@ class ECharts extends Component {
   };
 
   render() {
-    const source =
-      Platform.OS == 'ios'
-        ? require('./index.html')
-        : { uri: 'file:///android_asset/echarts/index.html' };
+    let source;
+    if (this.props.baseUrl) {
+      source = {
+        html: this.html,
+        baseUrl: this.props.baseUrl
+      }
+    } else {
+      source =
+        Platform.OS == 'ios'
+          ? require('./index.html')
+          : { uri: 'file:///android_asset/echarts/index.html' };
+    }
 
     return (
       <View style={{ flex: 1 }}>
@@ -68,6 +104,9 @@ class ECharts extends Component {
           source={source}
           injectedJavaScript={jsBuilder.getJavascriptSource(this.props)}
           onMessage={this.onMessage}
+          allowFileAccess
+          allowUniversalAccessFromFileURLs
+          mixedContentMode="always"
         />
       </View>
     );
@@ -78,6 +117,7 @@ ECharts.propTypes = {
   option: PropTypes.object,
   clear: PropTypes.func,
   setOption: PropTypes.func,
+  baseUrl: PropTypes.string
 };
 
 export { ECharts };
