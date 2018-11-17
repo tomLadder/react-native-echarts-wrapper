@@ -117,7 +117,8 @@ ECharts.propTypes = {
   option: PropTypes.object,
   clear: PropTypes.func,
   setOption: PropTypes.func,
-  baseUrl: PropTypes.string
+  baseUrl: PropTypes.string,
+  additionalCode: PropTypes.string
 };
 
 export { ECharts };

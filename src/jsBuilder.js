@@ -88,5 +88,7 @@ export const getJavascriptSource = (props) => {
                 break;
             }
         });
+
+        ${props.additionalCode}
     `;
 };
