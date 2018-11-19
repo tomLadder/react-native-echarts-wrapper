@@ -41,28 +41,10 @@
 $ npm install react-native-echarts-wrapper --save
 ```
 
-
-## Example
-To clone and run this application, you'll need [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)), [React-Native-Cli](https://facebook.github.io/react-native/docs/getting-started.html), [XCode](https://itunes.apple.com/at/app/xcode/id497799835?mt=12) and [Android-Studio](https://developer.android.com/studio/) installed on your computer.
-
-From your command line:
-
-```bash
-# Clone this repository
-$ git clone https://github.com/tomLadder/react-native-echarts-wrapper
-
-# Go into the repository
-$ cd react-native-echarts-wrapper/example
-
-# Install dependencies
-$ npm install
-
-# Run android
-$ react-native run-android
-
-# Run ios
-$ react-native run-ios
-```
+## [1.1.0] - Saturday, 17.Nov 2018
+### Added
+- baseUrl prop allows to access local content within the Webview on iOS and Android
+- additionalCode prop allows to create more complex chart configurations (e.G. ```chart.on('click'```)
 
 ## [1.0.4] - Monday, 5.Nov 2018
 ### Fixed
