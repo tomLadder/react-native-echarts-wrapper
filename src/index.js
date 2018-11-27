@@ -92,7 +92,7 @@ class ECharts extends Component {
       source =
         Platform.OS == 'ios'
           ? require('./index.html')
-          : { uri: 'file:///android_asset/echarts/index.html' };
+          : { uri: 'file:///android_asset/index.html' };
     }
 
     return (

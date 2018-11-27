@@ -1,28 +1,28 @@
 {
-  "name": "react-native-echarts-wrapper",
-  "version": "1.1.0",
-  "description": "Powerful React-Native ECharts Wrapper",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tomLadder/react-native-echarts-wrapper.git"
-  },
-  "keywords": [
-    "echarts",
-    "react-native-echarts",
-    "native-echarts",
-    "react-native-echarts-wrapper"
-  ],
-  "author": "Thomas Leiter",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/tomLadder/react-native-echarts-wrapper/issues"
-  },
-  "homepage": "https://github.com/tomLadder/react-native-echarts-wrapper#readme",
-  "dependencies": {
-    "prop-types": "^15.6.2"
-  }
+    "name": "react-native-echarts-wrapper",
+    "version": "1.1.1",
+    "description": "Powerful React-Native ECharts Wrapper",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tomLadder/react-native-echarts-wrapper.git"
+    },
+    "keywords": [
+        "echarts",
+        "react-native-echarts",
+        "native-echarts",
+        "react-native-echarts-wrapper"
+    ],
+    "author": "Thomas Leiter",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/tomLadder/react-native-echarts-wrapper/issues"
+    },
+    "homepage": "https://github.com/tomLadder/react-native-echarts-wrapper#readme",
+    "dependencies": {
+        "prop-types": "^15.6.2"
+    }
 }

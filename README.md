@@ -1,10 +1,10 @@
-<h1 align="center">
+<p align="center">
   <br>
   <a href="https://github.com/tomLadder/react-native-echarts-wrapper"><img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/develope/images/echarts.png" alt="ECharts" width="200"></a>
   <br>
-  react-native-echarts-wrapper
+  <h1 align="center">react-native-echarts-wrapper</h1>
   <br>
-</h1>
+</p>
 
 <h4 align="center">ECharts wrapper build for <a href="https://facebook.github.io/react-native/" target="_blank">React Native</a>.</h4>
 
@@ -28,6 +28,12 @@
 
 ![screenshot](https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/develope/images/dynamic.png)
 
+### A React Native wrapper for the popular echarts charting framework. With this library you can create complex, interactive charts with great performance on mobile devices.
+
+The fact that the charting framework purely runs in a webview makes it very stable to upcomming React-Native versions. On the other hand it is not easy to make a two way data communication between the chart (running in the webview Javascript thread) and the React-Native Javascript thread. With this library you can even build the more complex chart options of <a href="https://ecomfe.github.io/echarts-examples/public/index.html" target="_blank">echarts</a>. You can inject custom javascript code within the webview which allows you to access the chart api (detect taps, selections etc...)
+
+
+
 # Screenshots
 
 <p align="center">
@@ -41,7 +47,37 @@
 $ npm install react-native-echarts-wrapper --save
 ```
 
-### Example
+### Properties
+| Name | Type | Example | Description |
+| ---- | ---- | ------- | ----------- |
+| option | object | take a look at the examples | Allows you to set the chart configuration (https://ecomfe.github.io/echarts-examples/public/index.html). Never access anything related to your React-Native Javascript code within the options object. It won't work! Take a look at ```onData``` and ```sendData```
+| baseUrl | string | file:///android_assets | Use this property if you want to tell echarts where to look for local assets. You can use <a href="https://github.com/itinance/react-native-fs" target="_blank">RNFS</a> to get the directory path for Android/iOS. Take a look at <a href="#simple-example">Simple example</a>
+| additionalCode | string | ```alert('hello world');``` | Allows you to inject javascript code in the webview. It is used to access the echarts api to create more complex charts (e.G. callback on chart tap). Take a look at <a href="#more-complex-example">More complex example</a>
+
+
+### Methods / Callbacks
+| Name | Example | Description |
+| ---- | ------- | ----------- |
+| setOption |``` this.chart.setOption(option);```| Allows you to set a chart configuration dyanmically (e.g. after initial setup with option prop). Take a look at <a href="#dynamic-loading-example">Dynamic loading example</a> |
+| clear |```this.chart.clear();```| Allows you to clear the chart. Take a look at <a href="#more-complex-example">More complex example</a>
+| onData | ```<ECharts onData={this.onData} />``` | This is the only way to receive data from the chart. It is called with the data provided by sendData (Webview functions). |
+
+
+### Webview functions
+These functions can be called from code injected with ```additionalCode``` or within the echarts option.
+
+| Name | Example  | Description |
+| ---- | -------- | ----------- |
+| sendData | ```sendData('Hello World')``` | With this function you can communicate with React Native. **Attention** you can only send strings over to React-Native. ```sendData('Hello World')``` will call ```onData``` on the React Native side. Take a look at <a href="#more-complex-example">More complex example</a>
+
+
+### Webview variables
+| Name | Example | Description |
+| ---- | ------- | ----------- |
+| chart | ```chart.on(....)``` | Allows you to access the echarts api (https://ecomfe.github.io/echarts-doc/public/en/api.html#echartsInstance). Take a look at <a href="#more-complex-example">More complex example</a>
+
+
+### Simple example
 ```js
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -78,6 +114,200 @@ const styles = StyleSheet.create({
 });
 ```
 
+
+### More complex example
+```js
+import React, { Component } from 'react';
+import { StyleSheet, SafeAreaView, Button } from 'react-native';
+import { ECharts } from 'react-native-echarts-wrapper';
+
+export default class App extends Component {
+    option = {
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+        }]
+    };
+
+    additionalCode = `
+        chart.on('click', function(param) {
+            var obj = {
+            type: 'event_clicked',
+            data: param.data
+            };
+
+            sendData(JSON.stringify(obj));
+        });
+    `;
+
+    onData = (param) => {
+        const obj = JSON.parse(param);
+
+        if (obj.type === 'event_clicked') {
+            alert(`you tapped the chart series: ${obj.data}`);
+        }
+    }
+
+    onRef = (ref) => {
+        if (ref) {
+            this.chart = ref;
+        }
+    };
+
+    onButtonClearPressed = () => {
+        this.chart.clear();
+    }
+
+    render() {
+        return (
+            <SafeAreaView style={styles.chartContainer}>
+                <Button title="Clear" onPress={this.onButtonClearPressed}></Button>
+
+                <ECharts
+                    ref={this.onRef}
+                    option={this.option}
+                    additionalCode={this.additionalCode}
+                    onData={this.onData} />
+            </SafeAreaView>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    chartContainer: {
+        flex: 1,
+        backgroundColor: '#F5FCFF',
+    },
+});
+```
+
+### Dynamic loading example
+```js
+import React, { Component } from 'react';
+import { StyleSheet, SafeAreaView, Button } from 'react-native';
+import { ECharts } from 'react-native-echarts-wrapper';
+
+export default class App extends Component {
+
+    onRef = (ref) => {
+        if (ref) {
+            this.chart = ref;
+        }
+    };
+
+    onData = (param) => { }
+
+    initChart = () => {
+        function randomData() {
+            now = new Date(+now + oneDay);
+            value = value + Math.random() * 21 - 10;
+            return {
+                name: now.toString(),
+                value: [
+                    [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                    Math.round(value)
+                ]
+            }
+        }
+
+        var data = [];
+        var now = +new Date(1997, 9, 3);
+        var oneDay = 24 * 3600 * 1000;
+        var value = Math.random() * 1000;
+        for (var i = 0; i < 1000; i++) {
+            data.push(randomData());
+        }
+
+        option = {
+            title: {
+                text: 'Dynamic Chart'
+            },
+            tooltip: {
+                trigger: 'axis',
+                formatter: function (params) {
+                    params = params[0];
+                    var date = new Date(params.name);
+                    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+                },
+                axisPointer: {
+                    animation: false
+                }
+            },
+            xAxis: {
+                type: 'time',
+                splitLine: {
+                    show: false
+                }
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '100%'],
+                splitLine: {
+                    show: false
+                }
+            },
+            series: [{
+                type: 'line',
+                showSymbol: false,
+                hoverAnimation: false,
+                data: data
+            }]
+        };
+
+        this.chart.setOption(option);
+
+        const instance = this.chart;
+
+        setInterval(function () {
+
+            for (var i = 0; i < 5; i++) {
+                data.shift();
+                data.push(randomData());
+            }
+
+            instance.setOption({
+                series: [{
+                    data: data
+                }]
+            });
+        }, 100);
+    }
+
+    render() {
+        return (
+            <SafeAreaView style={styles.chartContainer}>
+                <Button title="Start" onPress={this.initChart}></Button>
+
+                <ECharts
+                    option={{}}
+                    ref={this.onRef}
+                    additionalCode={this.additionalCode}
+                    onData={this.onData} />
+            </SafeAreaView>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    chartContainer: {
+        flex: 1,
+        backgroundColor: '#F5FCFF',
+    },
+});
+
+```
+
+## [1.1.1] - Tuesday, 27.Nov 2018
+### Fixed
+- Documentation missing (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/3" target="_blank">#3</a>)
+
 ## [1.1.0] - Saturday, 17.Nov 2018
 ### Added
 - baseUrl prop allows to access local content within the Webview on iOS and Android
@@ -93,5 +323,9 @@ const styles = StyleSheet.create({
 :---:
 |[Thomas Leiter](https://github.com/tomLadder)|
 
+## Contributors
+[<img alt="Stefan Papst" src="https://avatars3.githubusercontent.com/u/11005451?s=400&v=4" width="50">](https://github.com/papsti7) |
+:---:
+|[Stefan Papst](https://github.com/tomLadder)|
 
 See also the list of [contributors](https://github.com/tomLadder/react-native-echarts-wrapper/settings/collaboration) who participated in this project.
