@@ -51,7 +51,7 @@ $ npm install react-native-echarts-wrapper --save
 | Name | Type | Example | Description |
 | ---- | ---- | ------- | ----------- |
 | option | object | take a look at the examples | Allows you to set the chart configuration (https://ecomfe.github.io/echarts-examples/public/index.html). Never access anything related to your React-Native Javascript code within the options object. It won't work! Take a look at ```onData``` and ```sendData```
-| baseUrl | string | file:///android_assets | Use this property if you want to tell echarts where to look for local assets. You can use <a href="https://github.com/itinance/react-native-fs" target="_blank">RNFS</a> to get the directory path for Android/iOS. Take a look at <a href="#simple-example">Simple example</a>
+| baseUrl | string | file:///android_assets | Use this property if you want to tell echarts where to look for local assets. You can use <a href="https://github.com/itinance/react-native-fs" target="_blank">RNFS</a> to get the directory path for Android/iOS. Take a look at <a href="#more-complex-example">More complex example</a>
 | additionalCode | string | ```alert('hello world');``` | Allows you to inject javascript code in the webview. It is used to access the echarts api to create more complex charts (e.G. callback on chart tap). Take a look at <a href="#more-complex-example">More complex example</a>
 
 
