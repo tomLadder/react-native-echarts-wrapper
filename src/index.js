@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { View, WebView, Platform, Text } from 'react-native';
-import PropTypes from 'prop-types';
-import * as jsBuilder from './jsBuilder';
+import React, { Component } from "react";
+import { View, WebView, Platform, Text } from "react-native";
+import PropTypes from "prop-types";
+import * as jsBuilder from "./jsBuilder";
 
 class ECharts extends Component {
   /* Promises */
@@ -41,43 +41,43 @@ class ECharts extends Component {
     </html>`;
   }
 
-  onMessage = (e) => {
+  onMessage = e => {
     if (!e) return null;
 
     const data = JSON.parse(e.nativeEvent.data);
     switch (data.types) {
-      case 'DATA':
+      case "DATA":
         this.props.onData(data.payload);
         break;
       default:
         break;
     }
   };
-  postMessage = (data) => {
+  postMessage = data => {
     this.webview.postMessage(jsBuilder.convertToPostMessageString(data));
   };
 
   /* echartsInstance */
   setOption = (option, notMerge, lazyUpdate) => {
     const data = {
-      types: 'SET_OPTION',
+      types: "SET_OPTION",
       payload: {
         option,
         notMerge: notMerge || false,
-        lazyUpdate: lazyUpdate || false,
-      },
+        lazyUpdate: lazyUpdate || false
+      }
     };
     this.postMessage(data);
   };
 
   clear = () => {
     const data = {
-      types: 'CLEAR',
+      types: "CLEAR"
     };
     this.postMessage(data);
   };
 
-  getWebViewRef = (ref) => {
+  getWebViewRef = ref => {
     this.webview = ref;
   };
 
@@ -87,19 +87,19 @@ class ECharts extends Component {
       source = {
         html: this.html,
         baseUrl: this.props.baseUrl
-      }
+      };
     } else {
       source =
-        Platform.OS == 'ios'
-          ? require('./index.html')
-          : { uri: 'file:///android_asset/index.html' };
+        Platform.OS == "ios"
+          ? require("./index.html")
+          : { uri: "file:///android_asset/index.html" };
     }
 
     return (
       <View style={{ flex: 1 }}>
         <WebView
           ref={this.getWebViewRef}
-          originWhitelist={['*']}
+          originWhitelist={["*"]}
           scrollEnabled={false}
           source={source}
           injectedJavaScript={jsBuilder.getJavascriptSource(this.props)}

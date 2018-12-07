@@ -1,33 +1,37 @@
-import { Platform } from 'react-native';
+import { Platform } from "react-native";
 
-export const convertToPostMessageString = (obj) => {
-    const result = JSON.stringify(obj, (key, val) => {
-        if (typeof val === 'function') {
-            return val.toString();
-        }
-        return val;
-    });
+export const convertToPostMessageString = obj => {
+  const result = JSON.stringify(obj, (key, val) => {
+    if (typeof val === "function") {
+      return val.toString();
+    }
+    return val;
+  });
 
-    return result;
+  return result;
 };
 
-const toString = (obj) => {
-    let result = JSON.stringify(obj, (key, val) => {
-        if (typeof val === 'function') {
-            return `~ha~${val}~ha~`;
-        }
-        return val;
-    });
+const toString = obj => {
+  let result = JSON.stringify(obj, (key, val) => {
+    if (typeof val === "function") {
+      return `~ha~${val}~ha~`;
+    }
+    return val;
+  });
 
-    do {
-        result = result.replace('\"~ha~', '').replace('~ha~\"', '').replace(/\\n/g, '').replace(/\\\"/g, '"');// 最后一个replace将release模式中莫名生成的\"转换成"
-    } while (result.indexOf('~ha~') >= 0);
-    return result;
+  do {
+    result = result
+      .replace('"~ha~', "")
+      .replace('~ha~"', "")
+      .replace(/\\n/g, "")
+      .replace(/\\\"/g, '"'); // 最后一个replace将release模式中莫名生成的\"转换成"
+  } while (result.indexOf("~ha~") >= 0);
+  return result;
 };
 
-export const getJavascriptSource = (props) => {
-    const { OS } = Platform;
-    return `
+export const getJavascriptSource = props => {
+  const { OS } = Platform;
+  return `
         var chart = echarts.init(document.getElementById('main'));
         chart.setOption(${toString(props.option)});
 
