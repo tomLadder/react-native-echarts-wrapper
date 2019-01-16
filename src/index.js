@@ -79,6 +79,18 @@ class ECharts extends Component {
     this.postMessage(data);
   };
 
+  setOption = (option, notMerge, lazyUpdate) => {
+    const data = {
+      types: "SET_OPTION",
+      payload: {
+        option,
+        notMerge: notMerge || false,
+        lazyUpdate: lazyUpdate || false
+      }
+    };
+    this.postMessage(data);
+  };
+
   clear = () => {
     const data = {
       types: "CLEAR"

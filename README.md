@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
 
 ```
 
-## [1.2.0] - Wednesday, 16.Jan 2019
+## [1.2.1] - Wednesday, 16.Jan 2019
 ### Added
 - getOption (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/4" target="_blank">#4</a>)
 
