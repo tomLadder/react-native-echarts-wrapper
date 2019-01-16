@@ -10,6 +10,7 @@ class ECharts extends Component {
     super(props);
     this.state = {};
     this.onGetHeight = null;
+    this.callbacks = {};
 
     this.html = `
     <!DOCTYPE html>
@@ -41,31 +42,39 @@ class ECharts extends Component {
     </html>`;
   }
 
-  onMessage = e => {
+  onMessage = (e) => {
     if (!e) return null;
 
     const data = JSON.parse(e.nativeEvent.data);
     switch (data.types) {
-      case "DATA":
+      case 'DATA':
         this.props.onData(data.payload);
+        break;
+      case 'CALLBACK':
+        const uuid = data.uuid;
+        this.callbacks[uuid](data.payload);
         break;
       default:
         break;
     }
   };
+
   postMessage = data => {
     this.webview.postMessage(jsBuilder.convertToPostMessageString(data));
   };
 
-  /* echartsInstance */
-  setOption = (option, notMerge, lazyUpdate) => {
+  ID = () =>
+    `_${Math.random()
+      .toString(36)
+      .substr(2, 9)}`;
+
+  getOption = (callback, properties = undefined) => {
+    const uuid = this.ID();
+    this.callbacks[uuid] = callback;
     const data = {
-      types: "SET_OPTION",
-      payload: {
-        option,
-        notMerge: notMerge || false,
-        lazyUpdate: lazyUpdate || false
-      }
+      types: 'GET_OPTION',
+      uuid,
+      properties,
     };
     this.postMessage(data);
   };
@@ -117,6 +126,7 @@ ECharts.propTypes = {
   option: PropTypes.object,
   clear: PropTypes.func,
   setOption: PropTypes.func,
+  getOption: PropTypes.func,
   baseUrl: PropTypes.string,
   additionalCode: PropTypes.string
 };

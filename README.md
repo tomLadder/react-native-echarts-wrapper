@@ -59,6 +59,7 @@ $ npm install react-native-echarts-wrapper --save
 | Name | Example | Description |
 | ---- | ------- | ----------- |
 | setOption |``` this.chart.setOption(option);```| Allows you to set a chart configuration dyanmically (e.g. after initial setup with option prop). Take a look at <a href="#dynamic-loading-example">Dynamic loading example</a> |
+| getOption |``` this.chart.getOption((data) => console.log(data));```| Allows you to get the current option of a chart instance. First parameter is the result-callback. If you don't pass a second parameter the result-callback will be triggered with all option properties. Second parameter is an array of the e-charts-option-properties (e.g. ```['dataZoom', 'series']```) you want to get. Take a look at <a href="#dynamic-loading-example">Dynamic loading example</a> |
 | clear |```this.chart.clear();```| Allows you to clear the chart. Take a look at <a href="#more-complex-example">More complex example</a>
 | onData | ```<ECharts onData={this.onData} />``` | This is the only way to receive data from the chart. It is called with the data provided by sendData (Webview functions). |
 
@@ -263,6 +264,12 @@ export default class App extends Component {
 
         this.chart.setOption(option);
 
+        //no query parameter: whole option object
+        this.chart.getOption((option) => { console.log(option)});
+
+        //with query parameter
+        this.chart.getOption((option) => { console.log(option)}, ['dataZoom', 'series']);
+
         const instance = this.chart;
 
         setInterval(function () {
@@ -303,6 +310,10 @@ const styles = StyleSheet.create({
 });
 
 ```
+
+## [1.2.0] - Wednesday, 16.Jan 2019
+### Added
+- getOption (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/4" target="_blank">#4</a>)
 
 ## [1.1.1] - Tuesday, 27.Nov 2018
 ### Fixed

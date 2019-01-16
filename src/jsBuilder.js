@@ -39,6 +39,10 @@ export const getJavascriptSource = props => {
             window.postMessage(JSON.stringify({"types":"DATA","payload": data}));
         }
 
+        function sendCallbackData(uuid, data) {
+            window.postMessage(JSON.stringify({"types":"CALLBACK", "uuid": uuid, "payload": data}));
+        }
+
         function getOS() {
             return ${OS};
         }
@@ -79,14 +83,26 @@ export const getJavascriptSource = props => {
         window.document.addEventListener('message', function(e) {
             var req = parse(e.data);
 
-            console.log(req);
-
             switch(req.types) {
               case "SET_OPTION":
                 chart.setOption(req.payload.option, req.payload.notMerge,req.payload.lazyUpate);
                 break;
               case "CLEAR":
                 chart.clear();
+                break;
+              case "GET_OPTION":
+                var option = chart.getOption();
+                var data = {};
+
+                if(req.properties !== undefined) {
+                    req.properties.forEach((prop) => data[prop] = option[prop]);
+                } else {
+                    var data = {
+                        option: option
+                     };
+                }
+
+                sendCallbackData(req.uuid, data);
                 break;
               default:
                 break;
