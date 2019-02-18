@@ -311,6 +311,10 @@ const styles = StyleSheet.create({
 
 ```
 
+## [1.2.2] - Monday, 18.Feb 2019
+### Fixed
+- crash when not passing an option
+
 ## [1.2.1] - Wednesday, 16.Jan 2019
 ### Added
 - getOption (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/4" target="_blank">#4</a>)

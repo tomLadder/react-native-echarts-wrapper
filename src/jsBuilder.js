@@ -12,6 +12,8 @@ export const convertToPostMessageString = obj => {
 };
 
 const toString = obj => {
+  if (obj === undefined) return JSON.stringify({});
+  
   let result = JSON.stringify(obj, (key, val) => {
     if (typeof val === "function") {
       return `~ha~${val}~ha~`;
