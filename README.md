@@ -37,15 +37,19 @@ The fact that the charting framework purely runs in a webview makes it very stab
 # Screenshots
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/develope/images/custom.png" width="200">
-<img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/develope/images/custom_rn_handler.png" width="200">
-<img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/develope/images/simple.png" width="200">
+<img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/master/images/custom.png" width="200">
+<img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/master/images/custom_rn_handler.png" width="200">
+<img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/master/images/simple.png" width="200">
 </p>
 
 # How To Use
 ```bash
 $ npm install react-native-echarts-wrapper --save
 ```
+#### Android
+Add the `index.html` from `node_modules/react-native-echarts-wrapper/src/` to your android assets folder
+![screenshot](https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/master/images/android_assets.png)
+
 
 ### Properties
 | Name | Type | Example | Description |
