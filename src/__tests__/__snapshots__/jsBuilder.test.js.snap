@@ -1,60 +1,30 @@
-import { Platform } from 'react-native';
+// Jest Snapshot v1, https://goo.gl/fbAQLP
 
-export const convertToPostMessageString = (obj) => {
-  const result = JSON.stringify(obj, (key, val) => {
-    if (typeof val === 'function') {
-      return val.toString();
-    }
-    return val;
-  });
+exports[`jsBuilder convertToPostMessageString works 1`] = `"{\\"test\\":\\"hello world\\",\\"func\\":\\"function func() {\\\\n        alert('hello');\\\\n      }\\"}"`;
 
-  return result;
-};
-
-export const toString = (obj) => {
-  if (obj === undefined) return JSON.stringify({});
-
-  let result = JSON.stringify(obj, (key, val) => {
-    if (typeof val === 'function') {
-      return `~ha~${val}~ha~`;
-    }
-    return val;
-  });
-
-  do {
-    result = result
-      .replace('"~ha~', '')
-      .replace('~ha~"', '')
-      .replace(/\\n/g, '')
-      .replace(/\\\"/g, '"');
-  } while (result.indexOf('~ha~') >= 0);
-  return result;
-};
-
-export const getJavascriptSource = (props) => {
-  const { OS } = Platform;
-  return `
+exports[`jsBuilder getJavascriptSource works 1`] = `
+"
         var chart = echarts.init(document.getElementById('main'));
-        chart.setOption(${toString(props.option)});
+        chart.setOption({\\"xAxis\\":{\\"type\\":\\"category\\",\\"data\\":[\\"Mon\\",\\"Tue\\",\\"Wed\\",\\"Thu\\",\\"Fri\\",\\"Sat\\",\\"Sun\\"]},\\"yAxis\\":{\\"type\\":\\"value\\"},\\"series\\":[{\\"data\\":[820,932,901,934,1290,1330,1320],\\"type\\":\\"line\\"}]});
 
         function sendData(data) {
-            window.postMessage(JSON.stringify({"types":"DATA","payload": data}));
+            window.postMessage(JSON.stringify({\\"types\\":\\"DATA\\",\\"payload\\": data}));
         }
 
         function sendCallbackData(uuid, data) {
-            window.postMessage(JSON.stringify({"types":"CALLBACK", "uuid": uuid, "payload": data}));
+            window.postMessage(JSON.stringify({\\"types\\":\\"CALLBACK\\", \\"uuid\\": uuid, \\"payload\\": data}));
         }
 
         function getOS() {
-            return ${OS};
+            return ios;
         }
 
         function parse (data) {
             return JSON.parse(data, function (key, value) {
 
                 if (value
-                    && typeof value === "string"
-                    && value.substr(0,8) == "function") {
+                    && typeof value === \\"string\\"
+                    && value.substr(0,8) == \\"function\\") {
                     var startBody = value.indexOf('{') + 1;
                     var endBody = value.lastIndexOf('}');
                     var startArgs = value.indexOf('(') + 1;
@@ -86,13 +56,13 @@ export const getJavascriptSource = (props) => {
             var req = parse(e.data);
 
             switch(req.types) {
-              case "SET_OPTION":
+              case \\"SET_OPTION\\":
                 chart.setOption(req.payload.option, req.payload.notMerge,req.payload.lazyUpate);
                 break;
-              case "CLEAR":
+              case \\"CLEAR\\":
                 chart.clear();
                 break;
-              case "GET_OPTION":
+              case \\"GET_OPTION\\":
                 var option = chart.getOption();
                 var data = {};
 
@@ -111,6 +81,8 @@ export const getJavascriptSource = (props) => {
             }
         });
 
-        ${props.additionalCode}
-    `;
-};
+        undefined
+    "
+`;
+
+exports[`jsBuilder toString works 1`] = `"{\\"test\\":\\"hello world\\",\\"func\\":function func() {        alert('hello');      }}"`;
