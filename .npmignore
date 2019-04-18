@@ -2,3 +2,5 @@ images/
 package/
 .DS_Store
 coverage/
+example/
+src/__tests__

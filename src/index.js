@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, WebView, Platform } from 'react-native';
+import { View, Platform } from 'react-native';
+import { WebView } from 'react-native-webview';
 import PropTypes from 'prop-types';
 
 import * as jsBuilder from './jsBuilder';

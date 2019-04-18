@@ -34,7 +34,7 @@ export const toString = (obj) => {
 export const getJavascriptSource = (props) => {
   const { OS } = Platform;
   return `
-        var chart = echarts.init(document.getElementById('main'));
+        var chart = echarts.init(document.getElementById('main'), undefined, {renderer: 'svg'});
         chart.setOption(${toString(props.option)});
 
         function sendData(data) {

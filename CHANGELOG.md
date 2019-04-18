@@ -1,3 +1,9 @@
+## [1.3.0] - Thursday, 18.Apr 2019
+### Added
+- tests, coverage, build report
+### Fixed
+- Blank page on Android (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/10" target="_blank">#10</a>)
+
 ## [1.2.2] - Monday, 18.Feb 2019
 ### Fixed
 - crash when not passing an option
