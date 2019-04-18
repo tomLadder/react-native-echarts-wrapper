@@ -1,10 +1,11 @@
 {
   "name": "react-native-echarts-wrapper",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "Powerful React-Native ECharts Wrapper",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/jest",
+    "coverage": "node_modules/.bin/jest --collectCoverage"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,15 @@
   },
   "homepage": "https://github.com/tomLadder/react-native-echarts-wrapper#readme",
   "dependencies": {
-    "prop-types": "15.6.2"
+    "prop-types": "^15.7.2",
+    "react-native-webview": "^5.7.0"
+  },
+  "devDependencies": {
+    "jest": "^24.1.0",
+    "jest-cli": "^24.1.0",
+    "react": "^16.8.3",
+    "react-native": "^0.58.5",
+    "react-native-testing-library": "^1.5.0",
+    "react-test-renderer": "^16.8.3"
   }
 }

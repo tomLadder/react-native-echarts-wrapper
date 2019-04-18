@@ -20,6 +20,11 @@
   </a>
 </p>
 
+[![Build Status](https://travis-ci.org/tomLadder/react-native-echarts-wrapper.svg?branch=master)](https://travis-ci.org/tomLadder/react-native-echarts-wrapper)
+[![Coverage Status](https://coveralls.io/repos/github/tomLadder/react-native-echarts-wrapper/badge.svg)](https://coveralls.io/github/tomLadder/react-native-echarts-wrapper)
+[![npm version](https://badge.fury.io/js/react-native-echarts-wrapper.svg)](https://badge.fury.io/js/react-native-echarts-wrapper)
+![npm](https://img.shields.io/npm/dt/react-native-echarts-wrapper.svg)
+
 <p align="center">
   <a href="#screenshots">Screenshots</a> •
   <a href="#how-to-use">How To Use</a> •
@@ -44,8 +49,17 @@ The fact that the charting framework purely runs in a webview makes it very stab
 
 # How To Use
 ```bash
-$ npm install react-native-echarts-wrapper --save
+$ yarn add react-native-echarts-wrapper
 ```
+
+```bash
+$ yarn add react-native-webview
+```
+
+```bash
+$ react-native link react-native-webview
+```
+
 #### Android
 Add the `index.html` from `node_modules/react-native-echarts-wrapper/src/` to your android assets folder
 ![screenshot](https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/master/images/android_assets.png)
@@ -314,6 +328,12 @@ const styles = StyleSheet.create({
 });
 
 ```
+
+## [1.3.0] - Thursday, 18.Apr 2019
+### Added
+- tests, coverage, build report
+### Fixed
+- Blank page on Android (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/10" target="_blank">#10</a>)
 
 ## [1.2.2] - Monday, 18.Feb 2019
 ### Fixed
