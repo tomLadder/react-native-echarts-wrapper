@@ -4,7 +4,7 @@ exports[`jsBuilder convertToPostMessageString works 1`] = `"{\\"test\\":\\"hello
 
 exports[`jsBuilder getJavascriptSource works 1`] = `
 "
-        var chart = echarts.init(document.getElementById('main'));
+        var chart = echarts.init(document.getElementById('main'), undefined, {renderer: 'svg'});
         chart.setOption({\\"xAxis\\":{\\"type\\":\\"category\\",\\"data\\":[\\"Mon\\",\\"Tue\\",\\"Wed\\",\\"Thu\\",\\"Fri\\",\\"Sat\\",\\"Sun\\"]},\\"yAxis\\":{\\"type\\":\\"value\\"},\\"series\\":[{\\"data\\":[820,932,901,934,1290,1330,1320],\\"type\\":\\"line\\"}]});
 
         function sendData(data) {
