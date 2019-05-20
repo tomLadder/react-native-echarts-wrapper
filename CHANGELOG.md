@@ -1,3 +1,13 @@
+## [1.4.0] - Monday, 20.May 2019
+### Fixed
+- Doesn't work on iOS in Expo (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/13" target="_blank">#13</a>)
+### Added
+- canvas & legacyMode
+
+## [1.3.1] - Wednesday, 24.Apr 2019
+### Fixed
+- Doesn't work on iOS in Expo (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/13" target="_blank">#13</a>)
+
 ## [1.3.0] - Thursday, 18.Apr 2019
 ### Added
 - tests, coverage, build report

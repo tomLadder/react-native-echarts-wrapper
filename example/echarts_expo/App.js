@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { StyleSheet, SafeAreaView, Button } from "react-native";
-import { ECharts } from "react-native-echarts-wrapper";
+import React, { Component } from 'react';
+import { StyleSheet, SafeAreaView, Button } from 'react-native';
+import { ECharts } from 'react-native-echarts-wrapper';
 
 export default class App extends Component {
-  onRef = ref => {
+  onRef = (ref) => {
     if (ref) {
       this.chart = ref;
     }
   };
 
-  onData = param => {};
+  onData = (param) => {};
 
   initChart = () => {
     function randomData() {
@@ -18,9 +18,9 @@ export default class App extends Component {
       return {
         name: now.toString(),
         value: [
-          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
-          Math.round(value)
-        ]
+          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+          Math.round(value),
+        ],
       };
     }
 
@@ -34,56 +34,56 @@ export default class App extends Component {
 
     option = {
       title: {
-        text: "Dynamic Chart"
+        text: 'Dynamic Chart',
       },
       tooltip: {
-        trigger: "axis",
+        trigger: 'axis',
         formatter(params) {
           params = params[0];
           const date = new Date(params.name);
-          return `${date.getDate()}/${date.getMonth() +
-            1}/${date.getFullYear()} : ${params.value[1]}`;
+          return `${date.getDate()}/${date.getMonth()
+            + 1}/${date.getFullYear()} : ${params.value[1]}`;
         },
         axisPointer: {
-          animation: false
-        }
+          animation: false,
+        },
       },
       xAxis: {
-        type: "time",
+        type: 'time',
         splitLine: {
-          show: false
-        }
+          show: false,
+        },
       },
       yAxis: {
-        type: "value",
-        boundaryGap: [0, "100%"],
+        type: 'value',
+        boundaryGap: [0, '100%'],
         splitLine: {
-          show: false
-        }
+          show: false,
+        },
       },
       series: [
         {
-          type: "line",
+          type: 'line',
           showSymbol: false,
           hoverAnimation: false,
-          data
-        }
-      ]
+          data,
+        },
+      ],
     };
 
     this.chart.setOption(option);
 
     // no query parameter: whole option object
-    this.chart.getOption(option => {
+    this.chart.getOption((option) => {
       console.log(option);
     });
 
     // with query parameter
     this.chart.getOption(
-      option => {
+      (option) => {
         console.log(option);
       },
-      ["dataZoom", "series"]
+      ['dataZoom', 'series'],
     );
 
     const instance = this.chart;
@@ -97,9 +97,9 @@ export default class App extends Component {
       instance.setOption({
         series: [
           {
-            data
-          }
-        ]
+            data,
+          },
+        ],
       });
     }, 100);
   };
@@ -110,11 +110,13 @@ export default class App extends Component {
         <Button title="Start" onPress={this.initChart} />
 
         <ECharts
-          onLoadEnd={() => alert("finished loading")}
+          onLoadEnd={() => alert('finished loading')}
+          legacyMode
           option={{}}
           ref={this.onRef}
           additionalCode={this.additionalCode}
           onData={this.onData}
+          canvas
         />
       </SafeAreaView>
     );
@@ -124,6 +126,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   chartContainer: {
     flex: 1,
-    backgroundColor: "#F5FCFF"
-  }
+    backgroundColor: '#F5FCFF',
+  },
 });
