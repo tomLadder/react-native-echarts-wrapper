@@ -23,7 +23,7 @@
     "url": "https://github.com/tomLadder/react-native-echarts-wrapper/issues"
   },
   "homepage": "https://github.com/tomLadder/react-native-echarts-wrapper#readme",
-  "dependencies": {
+  "peerDependencies": {
     "prop-types": "^15.7.2",
     "react-native-webview": "^5.7.0"
   },
