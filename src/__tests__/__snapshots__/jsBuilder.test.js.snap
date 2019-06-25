@@ -58,33 +58,41 @@ exports[`jsBuilder getJavascriptSource works 1`] = `
               chart.resize();
           };
   
+          function processMessage (e) {
+            var req = parse(e.data);
+  
+            switch(req.types) {
+              case \\"SET_OPTION\\":
+                chart.setOption(req.payload.option, req.payload.notMerge,req.payload.lazyUpate);
+                break;
+              case \\"CLEAR\\":
+                chart.clear();
+                break;
+              case \\"GET_OPTION\\":
+                var option = chart.getOption();
+                var data = {};
+
+                if(req.properties !== undefined) {
+                    req.properties.forEach((prop) => data[prop] = option[prop]);
+                } else {
+                    var data = {
+                        option: option
+                     };
+                }
+
+                sendCallbackData(req.uuid, data);
+                break;
+              default:
+                break;
+            }
+          }
+  
           window.document.addEventListener('message', function(e) {
-              var req = parse(e.data);
-  
-              switch(req.types) {
-                case \\"SET_OPTION\\":
-                  chart.setOption(req.payload.option, req.payload.notMerge,req.payload.lazyUpate);
-                  break;
-                case \\"CLEAR\\":
-                  chart.clear();
-                  break;
-                case \\"GET_OPTION\\":
-                  var option = chart.getOption();
-                  var data = {};
-  
-                  if(req.properties !== undefined) {
-                      req.properties.forEach((prop) => data[prop] = option[prop]);
-                  } else {
-                      var data = {
-                          option: option
-                       };
-                  }
-  
-                  sendCallbackData(req.uuid, data);
-                  break;
-                default:
-                  break;
-              }
+            processMessage(e);
+          });
+
+          window.addEventListener('message', function(e) {
+            processMessage(e);
           });
   
           undefined
