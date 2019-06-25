@@ -62,6 +62,7 @@ $ react-native link react-native-webview
 ```
 
 #### Expo
+
 Add legacyMode if you are using Expo.
 
 ```js
@@ -89,8 +90,8 @@ Add the `index.html` from `node_modules/react-native-echarts-wrapper/src/` to yo
 | option         | object | take a look at the examples | Allows you to set the chart configuration (https://ecomfe.github.io/echarts-examples/public/index.html). Never access anything related to your React-Native Javascript code within the options object. It won't work! Take a look at `onData` and `sendData`                                |
 | baseUrl        | string | file:///android_assets      | Use this property if you want to tell echarts where to look for local assets. You can use <a href="https://github.com/itinance/react-native-fs" target="_blank">RNFS</a> to get the directory path for Android/iOS. Take a look at <a href="#more-complex-example">More complex example</a> |
 | additionalCode | string | `alert('hello world');`     | Allows you to inject javascript code in the webview. It is used to access the echarts api to create more complex charts (e.G. callback on chart tap). Take a look at <a href="#more-complex-example">More complex example</a>                                                               |
-| legacyMode | bool | - | Uses Webview from 'react-native' instead of 'react-native-webview' |
-| canvas | bool | - | Use 'canvas' as renderer instead of 'svg' (default) |
+| legacyMode     | bool   | -                           | Uses Webview from 'react-native' instead of 'react-native-webview'                                                                                                                                                                                                                          |
+| canvas         | bool   | -                           | Use 'canvas' as renderer instead of 'svg' (default)                                                                                                                                                                                                                                         |
 
 ### Methods / Callbacks
 
@@ -372,37 +373,61 @@ const styles = StyleSheet.create({
 });
 ```
 
-## [1.4.0] - Monday, 20.May 2019
+## [1.4.1] - Tuesday, 25.June 2019
+
 ### Fixed
+
+- Dynamic loading issue on iOS (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/16" target="_blank">#16</a>)
+
+## [1.4.0] - Monday, 20.May 2019
+
+### Fixed
+
 - Doesn't work on iOS in Expo (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/13" target="_blank">#13</a>)
+
 ### Added
+
 - canvas & legacyMode
 
 ## [1.3.0] - Thursday, 18.Apr 2019
+
 ### Added
+
 - tests, coverage, build report
+
 ### Fixed
+
 - Blank page on Android (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/10" target="_blank">#10</a>)
 
 ## [1.2.2] - Monday, 18.Feb 2019
+
 ### Fixed
+
 - crash when not passing an option
 
 ## [1.2.1] - Wednesday, 16.Jan 2019
+
 ### Added
+
 - getOption (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/4" target="_blank">#4</a>)
 
 ## [1.1.1] - Tuesday, 27.Nov 2018
+
 ### Fixed
+
 - Documentation missing (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/3" target="_blank">#3</a>)
 
 ## [1.1.0] - Saturday, 17.Nov 2018
+
 ### Added
+
 - baseUrl prop allows to access local content within the Webview on iOS and Android
 - additionalCode prop allows to create more complex chart configurations (e.G. `chart.on('click'`)
 
 ## [1.0.4] - Monday, 5.Nov 2018
+
 ### Fixed
+
 - Functions in options do not work when setting via 'setOptions'
 
 # Authors
