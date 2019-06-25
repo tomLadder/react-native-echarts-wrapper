@@ -67,19 +67,23 @@ class ECharts extends Component {
   }
 
   onMessage = e => {
-    if (!e) return null;
+    try {
+      if (!e) return null;
 
-    const { onData } = this.props;
+      const { onData } = this.props;
 
-    const data = JSON.parse(e.nativeEvent.data);
+      const data = JSON.parse(e.nativeEvent.data);
 
-    if (data.types === "DATA") {
-      onData(data.payload);
-    } else if (data.types === "CALLBACK") {
-      /* eslint-disable no-case-declarations */
-      const { uuid } = data;
-      /* eslint-enable no-case-declarations */
-      this.callbacks[uuid](data.payload);
+      if (data.types === "DATA") {
+        onData(data.payload);
+      } else if (data.types === "CALLBACK") {
+        /* eslint-disable no-case-declarations */
+        const { uuid } = data;
+        /* eslint-enable no-case-declarations */
+        this.callbacks[uuid](data.payload);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
