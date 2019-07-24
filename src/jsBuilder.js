@@ -76,7 +76,7 @@ export const getJavascriptSource = (props) => {
           }
   
           function toString (obj) {
-              var result = JSON.stringify(obj, (key, val) => {
+              var result = JSON.stringify(obj, function (key, val) {
                 if (typeof val === 'function') {
                   return val.toString();
                 }
@@ -105,7 +105,9 @@ export const getJavascriptSource = (props) => {
                 var data = {};
 
                 if(req.properties !== undefined) {
-                    req.properties.forEach((prop) => data[prop] = option[prop]);
+                    req.properties.forEach(function (prop) {
+                      data[prop] = option[prop];
+                    });
                 } else {
                     var data = {
                         option: option
