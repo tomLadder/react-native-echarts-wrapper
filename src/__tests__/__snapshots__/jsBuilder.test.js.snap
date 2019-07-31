@@ -44,7 +44,7 @@ exports[`jsBuilder getJavascriptSource works 1`] = `
           }
   
           function toString (obj) {
-              var result = JSON.stringify(obj, (key, val) => {
+              var result = JSON.stringify(obj, function (key, val) {
                 if (typeof val === 'function') {
                   return val.toString();
                 }
@@ -73,7 +73,9 @@ exports[`jsBuilder getJavascriptSource works 1`] = `
                 var data = {};
 
                 if(req.properties !== undefined) {
-                    req.properties.forEach((prop) => data[prop] = option[prop]);
+                    req.properties.forEach(function (prop) {
+                      data[prop] = option[prop];
+                    });
                 } else {
                     var data = {
                         option: option
