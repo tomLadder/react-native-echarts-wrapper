@@ -373,6 +373,12 @@ const styles = StyleSheet.create({
 });
 ```
 
+## [1.4.2] - Wednesday, 31.July 2019
+
+### Fixed
+
+- fix arrow function not working on old version Android webview (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/pull/25" target="_blank">#25</a>)
+
 ## [1.4.1] - Tuesday, 25.June 2019
 
 ### Fixed
