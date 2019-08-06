@@ -373,6 +373,12 @@ const styles = StyleSheet.create({
 });
 ```
 
+## [1.4.3] - Tuesday, 06.August 2019
+
+### Fixed
+
+- Broken on React Native >= 0.60.0 (Invariant Violation: Element type is invalid) (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/27" target="_blank">#27</a>)
+
 ## [1.4.2] - Wednesday, 31.July 2019
 
 ### Fixed
