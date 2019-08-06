@@ -10,6 +10,9 @@ var WebView;
 var WebViewExternalPackage;
 try {
   WebView = require("react-native").WebView;
+} catch (err) {}
+
+try {
   WebViewExternalPackage = require("react-native-webview").WebView;
 } catch (err) {}
 
