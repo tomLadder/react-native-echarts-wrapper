@@ -373,6 +373,12 @@ const styles = StyleSheet.create({
 });
 ```
 
+## [1.4.4] - Thursday, 08.August 2019
+
+### Fixed
+
+- postMessage double-encoded iOS RN 0.59.x (<a href="https://github.com/facebook/react-native/issues/25266" target="_blank">see react-native issue</a>)
+
 ## [1.4.3] - Tuesday, 06.August 2019
 
 ### Fixed

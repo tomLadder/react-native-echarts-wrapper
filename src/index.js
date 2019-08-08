@@ -75,7 +75,7 @@ class ECharts extends Component {
 
       const { onData } = this.props;
 
-      const data = JSON.parse(e.nativeEvent.data);
+      const data = JSON.parse(unescape(unescape(e.nativeEvent.data)));
 
       if (data.types === "DATA") {
         onData(data.payload);
