@@ -1,3 +1,9 @@
+## [1.4.5] - Saturday, 17.August 2019
+
+### Added
+
+- Loading state/Background Color (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/17" target="_blank">#17</a>)
+
 ## [1.4.4] - Thursday, 08.August 2019
 
 ### Fixed

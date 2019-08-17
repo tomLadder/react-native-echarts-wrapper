@@ -85,22 +85,24 @@ Add the `index.html` from `node_modules/react-native-echarts-wrapper/src/` to yo
 
 ### Properties
 
-| Name           | Type   | Example                     | Description                                                                                                                                                                                                                                                                                 |
-| -------------- | ------ | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| option         | object | take a look at the examples | Allows you to set the chart configuration (https://ecomfe.github.io/echarts-examples/public/index.html). Never access anything related to your React-Native Javascript code within the options object. It won't work! Take a look at `onData` and `sendData`                                |
-| baseUrl        | string | file:///android_assets      | Use this property if you want to tell echarts where to look for local assets. You can use <a href="https://github.com/itinance/react-native-fs" target="_blank">RNFS</a> to get the directory path for Android/iOS. Take a look at <a href="#more-complex-example">More complex example</a> |
-| additionalCode | string | `alert('hello world');`     | Allows you to inject javascript code in the webview. It is used to access the echarts api to create more complex charts (e.G. callback on chart tap). Take a look at <a href="#more-complex-example">More complex example</a>                                                               |
-| legacyMode     | bool   | -                           | Uses Webview from 'react-native' instead of 'react-native-webview'                                                                                                                                                                                                                          |
-| canvas         | bool   | -                           | Use 'canvas' as renderer instead of 'svg' (default)                                                                                                                                                                                                                                         |
+| Name            | Type   | Example                            | Description                                                                                                                                                                                                                                                                                 |
+| --------------- | ------ | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| option          | object | take a look at the examples        | Allows you to set the chart configuration (https://ecomfe.github.io/echarts-examples/public/index.html). Never access anything related to your React-Native Javascript code within the options object. It won't work! Take a look at `onData` and `sendData`                                |
+| baseUrl         | string | file:///android_assets             | Use this property if you want to tell echarts where to look for local assets. You can use <a href="https://github.com/itinance/react-native-fs" target="_blank">RNFS</a> to get the directory path for Android/iOS. Take a look at <a href="#more-complex-example">More complex example</a> |
+| additionalCode  | string | `alert('hello world');`            | Allows you to inject javascript code in the webview. It is used to access the echarts api to create more complex charts (e.G. callback on chart tap). Take a look at <a href="#more-complex-example">More complex example</a>                                                               |
+| legacyMode      | bool   | -                                  | Uses Webview from 'react-native' instead of 'react-native-webview'                                                                                                                                                                                                                          |
+| canvas          | bool   | -                                  | Use 'canvas' as renderer instead of 'svg' (default)                                                                                                                                                                                                                                         |
+| backgroundColor | string | rgba(255,101,80,0.4), red, #4287f5 | Set the background color of the chart                                                                                                                                                                                                                                                       |
 
 ### Methods / Callbacks
 
-| Name      | Example                                              | Description                                                                                                                                                                                                                                                                                                                                                                                            |
-| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| setOption | `this.chart.setOption(option);`                      | Allows you to set a chart configuration dyanmically (e.g. after initial setup with option prop). Take a look at <a href="#dynamic-loading-example">Dynamic loading example</a>                                                                                                                                                                                                                         |
-| getOption | `this.chart.getOption((data) => console.log(data));` | Allows you to get the current option of a chart instance. First parameter is the result-callback. If you don't pass a second parameter the result-callback will be triggered with all option properties. Second parameter is an array of the e-charts-option-properties (e.g. `['dataZoom', 'series']`) you want to get. Take a look at <a href="#dynamic-loading-example">Dynamic loading example</a> |
-| clear     | `this.chart.clear();`                                | Allows you to clear the chart. Take a look at <a href="#more-complex-example">More complex example</a>                                                                                                                                                                                                                                                                                                 |
-| onData    | `<ECharts onData={this.onData} />`                   | This is the only way to receive data from the chart. It is called with the data provided by sendData (Webview functions).                                                                                                                                                                                                                                                                              |
+| Name               | Example                                              | Description                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------------ | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| setOption          | `this.chart.setOption(option);`                      | Allows you to set a chart configuration dyanmically (e.g. after initial setup with option prop). Take a look at <a href="#dynamic-loading-example">Dynamic loading example</a>                                                                                                                                                                                                                         |
+| getOption          | `this.chart.getOption((data) => console.log(data));` | Allows you to get the current option of a chart instance. First parameter is the result-callback. If you don't pass a second parameter the result-callback will be triggered with all option properties. Second parameter is an array of the e-charts-option-properties (e.g. `['dataZoom', 'series']`) you want to get. Take a look at <a href="#dynamic-loading-example">Dynamic loading example</a> |
+| clear              | `this.chart.clear();`                                | Allows you to clear the chart. Take a look at <a href="#more-complex-example">More complex example</a>                                                                                                                                                                                                                                                                                                 |
+| onData             | `<ECharts onData={this.onData} />`                   | This is the only way to receive data from the chart. It is called with the data provided by sendData (Webview functions).                                                                                                                                                                                                                                                                              |
+| setBackgroundColor | `this.chart.setBackgroundColor('#ecf542');`          | Allows you to set the background color of the chart.                                                                                                                                                                                                                                                                                                                                                   |
 
 ### Webview functions
 
@@ -143,7 +145,10 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.chartContainer}>
-        <ECharts option={this.option} />
+        <ECharts
+          option={this.option}
+          backgroundColor="rgba(93, 169, 81, 0.3)"
+        />
       </View>
     );
   }
@@ -219,6 +224,9 @@ export default class App extends Component {
           option={this.option}
           additionalCode={this.additionalCode}
           onData={this.onData}
+          onLoadEnd={() => {
+            this.chart.setBackgroundColor("rgba(93, 169, 81, 0.1)");
+          }}
         />
       </SafeAreaView>
     );
@@ -372,6 +380,12 @@ const styles = StyleSheet.create({
   }
 });
 ```
+
+## [1.4.5] - Saturday, 17.August 2019
+
+### Added
+
+- Loading state/Background Color (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/17" target="_blank">#17</a>)
 
 ## [1.4.4] - Thursday, 08.August 2019
 

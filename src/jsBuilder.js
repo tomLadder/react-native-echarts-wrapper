@@ -38,11 +38,16 @@ export const getJavascriptSource = (props) => {
   return `
           var chart = echarts.init(document.getElementById('main'), undefined, {renderer: '${renderer}'});
           chart.setOption(${toString(props.option)});
+          setBackgroundColor("${props.backgroundColor}");
   
           if(${props.legacyMode} == false) {
               window.postMessage = function(data) {
                   window.ReactNativeWebView.postMessage(data);
               };
+          }
+
+          function setBackgroundColor(color) {
+            document.getElementById('main').style.backgroundColor = color;
           }
   
           function sendData(data) {
@@ -99,6 +104,9 @@ export const getJavascriptSource = (props) => {
                 break;
               case "CLEAR":
                 chart.clear();
+                break;
+              case "SET_BACKGROUND_COLOR":
+                setBackgroundColor(req.color);
                 break;
               case "GET_OPTION":
                 var option = chart.getOption();

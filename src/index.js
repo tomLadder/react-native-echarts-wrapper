@@ -22,7 +22,8 @@ class ECharts extends Component {
     baseUrl: PropTypes.string,
     legacyMode: PropTypes.bool,
     canvas: PropTypes.bool,
-    onLoadEnd: PropTypes.func
+    onLoadEnd: PropTypes.func,
+    backgroundColor: PropTypes.string
   };
 
   static defaultProps = {
@@ -30,7 +31,8 @@ class ECharts extends Component {
     onData: () => {},
     legacyMode: false,
     canvas: false,
-    onLoadEnd: () => {}
+    onLoadEnd: () => {},
+    backgroundColor: "rgba(0, 0, 0, 0)"
   };
 
   constructor(props) {
@@ -98,6 +100,14 @@ class ECharts extends Component {
     `_${Math.random()
       .toString(36)
       .substr(2, 9)}`;
+
+  setBackgroundColor = color => {
+    const data = {
+      types: "SET_BACKGROUND_COLOR",
+      color
+    };
+    this.postMessage(data);
+  };
 
   getOption = (callback, properties = undefined) => {
     const uuid = this.ID();
