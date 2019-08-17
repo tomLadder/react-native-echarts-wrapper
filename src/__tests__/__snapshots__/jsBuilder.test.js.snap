@@ -6,11 +6,16 @@ exports[`jsBuilder getJavascriptSource works 1`] = `
 "
           var chart = echarts.init(document.getElementById('main'), undefined, {renderer: 'svg'});
           chart.setOption({\\"xAxis\\":{\\"type\\":\\"category\\",\\"data\\":[\\"Mon\\",\\"Tue\\",\\"Wed\\",\\"Thu\\",\\"Fri\\",\\"Sat\\",\\"Sun\\"]},\\"yAxis\\":{\\"type\\":\\"value\\"},\\"series\\":[{\\"data\\":[820,932,901,934,1290,1330,1320],\\"type\\":\\"line\\"}]});
+          setBackgroundColor(\\"undefined\\");
   
           if(undefined == false) {
               window.postMessage = function(data) {
                   window.ReactNativeWebView.postMessage(data);
               };
+          }
+
+          function setBackgroundColor(color) {
+            document.getElementById('main').style.backgroundColor = color;
           }
   
           function sendData(data) {
@@ -67,6 +72,9 @@ exports[`jsBuilder getJavascriptSource works 1`] = `
                 break;
               case \\"CLEAR\\":
                 chart.clear();
+                break;
+              case \\"SET_BACKGROUND_COLOR\\":
+                setBackgroundColor(req.color);
                 break;
               case \\"GET_OPTION\\":
                 var option = chart.getOption();
