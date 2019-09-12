@@ -1,4 +1,4 @@
-## [1.4.6] - Thursday, 12.September 2019
+## [1.4.7] - Thursday, 12.September 2019
 
 ### Fixed
 

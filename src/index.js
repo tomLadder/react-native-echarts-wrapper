@@ -147,6 +147,13 @@ class ECharts extends Component {
     }
   };
 
+  onLoadEnd = () => {
+    if (this.webview) {
+      this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
+    }
+    this.props.onLoadEnd();
+  };
+
   render() {
     let source;
     const { baseUrl, legacyMode } = this.props;
@@ -184,7 +191,7 @@ class ECharts extends Component {
             allowFileAccess
             allowUniversalAccessFromFileURLs
             mixedContentMode="always"
-            onLoadEnd={this.props.onLoadEnd}
+            onLoadEnd={this.onLoadEnd}
           />
         ) : (
           <WebViewExternalPackage
@@ -197,7 +204,7 @@ class ECharts extends Component {
             allowFileAccess
             allowUniversalAccessFromFileURLs
             mixedContentMode="always"
-            onLoadEnd={this.props.onLoadEnd}
+            onLoadEnd={this.onLoadEnd}
           />
         )}
       </View>
