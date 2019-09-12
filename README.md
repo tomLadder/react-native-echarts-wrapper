@@ -381,6 +381,12 @@ const styles = StyleSheet.create({
 });
 ```
 
+## [1.4.6] - Thursday, 12.September 2019
+
+### Fixed
+
+- Variables and functions from injectedJavaScript not available on Android (<a href="https://github.com/react-native-community/react-native-webview/issues/554" target="_blank">see react-native issue</a>)
+
 ## [1.4.5] - Saturday, 17.August 2019
 
 ### Added

@@ -141,6 +141,10 @@ class ECharts extends Component {
 
   getWebViewRef = ref => {
     this.webview = ref;
+
+    if (this.webview) {
+      this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
+    }
   };
 
   render() {
@@ -176,7 +180,6 @@ class ECharts extends Component {
             originWhitelist={["*"]}
             scrollEnabled={false}
             source={source}
-            injectedJavaScript={jsBuilder.getJavascriptSource(this.props)}
             onMessage={this.onMessage}
             allowFileAccess
             allowUniversalAccessFromFileURLs
@@ -190,7 +193,6 @@ class ECharts extends Component {
             originWhitelist={["*"]}
             scrollEnabled={false}
             source={source}
-            injectedJavaScript={jsBuilder.getJavascriptSource(this.props)}
             onMessage={this.onMessage}
             allowFileAccess
             allowUniversalAccessFromFileURLs

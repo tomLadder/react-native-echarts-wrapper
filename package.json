@@ -1,6 +1,6 @@
 {
   "name": "react-native-echarts-wrapper",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "📈Powerful React-Native ECharts Wrapper 📊",
   "main": "src/index.js",
   "scripts": {
