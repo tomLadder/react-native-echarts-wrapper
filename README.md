@@ -21,7 +21,7 @@
 </p>
 
 [![Build Status](https://travis-ci.org/tomLadder/react-native-echarts-wrapper.svg?branch=master)](https://travis-ci.org/tomLadder/react-native-echarts-wrapper)
-[![Coverage Status](https://coveralls.io/repos/github/tomLadder/react-native-echarts-wrapper/badge.svg)](https://coveralls.io/github/tomLadder/react-native-echarts-wrapper)
+[![Coverage Status](https://coveralls.io/repos/github/tomLadder/react-native-echarts-wrapper/badge.svg?branch=master)](https://coveralls.io/github/tomLadder/react-native-echarts-wrapper?branch=master)
 [![npm version](https://badge.fury.io/js/react-native-echarts-wrapper.svg)](https://badge.fury.io/js/react-native-echarts-wrapper)
 ![npm](https://img.shields.io/npm/dt/react-native-echarts-wrapper.svg)
 
