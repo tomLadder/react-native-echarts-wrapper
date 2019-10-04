@@ -1,28 +1,28 @@
-import { Platform } from "react-native";
+import { Platform } from "react-native"
 
 export const convertToPostMessageString = obj => {
   return JSON.stringify(obj, (key, val) => {
     if (typeof val === "function") {
-      return new Function("return " + val.toString());
+      return new Function("return " + val.toString())
     }
-    return val;
-  });
-};
+    return val
+  })
+}
 
 export const toString = obj => {
-  if (obj === undefined) return JSON.stringify({});
+  if (obj === undefined) return JSON.stringify({})
 
   return JSON.stringify(obj, (key, val) => {
     if (typeof val === "function") {
-      return val.toString();
+      return val.toString()
     }
-    return val;
-  });
-};
+    return val
+  })
+}
 
 export const getJavascriptSource = props => {
-  const { OS } = Platform;
-  const renderer = props.canvas ? "canvas" : "svg";
+  const { OS } = Platform
+  const renderer = "canvas"
 
   return `
              var chart = echarts.init(document.getElementById('main'), undefined, {renderer: '${renderer}'});
@@ -124,5 +124,5 @@ export const getJavascriptSource = props => {
               });
 
               ${props.additionalCode}
-        `;
-};
+        `
+}

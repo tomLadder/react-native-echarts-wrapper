@@ -24,8 +24,8 @@
   },
   "homepage": "https://github.com/tomLadder/react-native-echarts-wrapper#readme",
   "peerDependencies": {
-    "prop-types": "^15.7.2",
-    "react-native-webview": "7.0.4"
+    "prop-types": ">= 15.7.2",
+    "react-native-webview": ">= 5.0.1"
   },
   "devDependencies": {
     "coveralls": "^3.0.3",

@@ -2,11 +2,11 @@
   <br>
   <a href="https://github.com/tomLadder/react-native-echarts-wrapper"><img src="https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/develope/images/echarts.png" alt="ECharts" width="200"></a>
   <br>
-  <h1 align="center">react-native-echarts-wrapper</h1>
+  <h1 align="center">react-native-echarts-wrapper v2.0.0</h1>
   <br>
 </p>
 
-<h4 align="center">ECharts wrapper build for <a href="https://facebook.github.io/react-native/" target="_blank">React Native</a>.</h4>
+<h4 align="center">ECharts wrapper build for <a href="https://facebook.github.io/react-native/" target="_blank">React Native</a>/<a href="https://expo.io/learn" target="_blank">Expo</a>.</h4>
 
 <p align="center">
   <a>
@@ -51,50 +51,23 @@ The fact that the charting framework purely runs in a webview makes it very stab
 $ yarn add react-native-echarts-wrapper
 ```
 
-Not required if using expo or if you want to run in legacy mode:
+# Supported Versions
 
-```bash
-$ yarn add react-native-webview
-```
+| Version | Expo    | React-Native |
+| ------- | ------- | ------------ |
+| 2.x.x   | >= 0.33 | >= 0.58      |
+| 1.x.x   | /       | >= 0.56      |
 
-```bash
-$ react-native link react-native-webview
-```
+# Properties
 
-#### Expo
+| Name               | Type   | Example                            | Description                                                                                                                                                                                                                                                  |
+| ------------------ | ------ | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| option             | object | take a look at the examples        | Allows you to set the chart configuration (https://ecomfe.github.io/echarts-examples/public/index.html). Never access anything related to your React-Native Javascript code within the options object. It won't work! Take a look at `onData` and `sendData` |
+| customTemplatePath | string | file:///android_assets/index.html  | Use this property if you want to tell echarts where to look for a custom html template. You can use <a href="https://github.com/itinance/react-native-fs" target="_blank">RNFS</a> to get the directory path for Android/iOS.                                |
+| additionalCode     | string | `alert('hello world');`            | Allows you to inject javascript code in the webview. It is used to access the echarts api to create more complex charts (e.G. callback on chart tap). Take a look at <a href="#more-complex-example">More complex example</a>                                |
+| backgroundColor    | string | rgba(255,101,80,0.4), red, #4287f5 | Set the background color of the chart                                                                                                                                                                                                                        |
 
-Add legacyMode if you are using Expo.
-
-```js
-    render() {
-        return (
-            <View>
-                <ECharts
-                    legacyMode
-                    option={this.option}>
-                </ECharts>
-            </View>
-        );
-    }
-```
-
-#### Android
-
-Add the `index.html` from `node_modules/react-native-echarts-wrapper/src/` to your android assets folder
-![screenshot](https://raw.githubusercontent.com/tomLadder/react-native-echarts-wrapper/master/images/android_assets.png)
-
-### Properties
-
-| Name            | Type   | Example                            | Description                                                                                                                                                                                                                                                                                 |
-| --------------- | ------ | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| option          | object | take a look at the examples        | Allows you to set the chart configuration (https://ecomfe.github.io/echarts-examples/public/index.html). Never access anything related to your React-Native Javascript code within the options object. It won't work! Take a look at `onData` and `sendData`                                |
-| baseUrl         | string | file:///android_assets             | Use this property if you want to tell echarts where to look for local assets. You can use <a href="https://github.com/itinance/react-native-fs" target="_blank">RNFS</a> to get the directory path for Android/iOS. Take a look at <a href="#more-complex-example">More complex example</a> |
-| additionalCode  | string | `alert('hello world');`            | Allows you to inject javascript code in the webview. It is used to access the echarts api to create more complex charts (e.G. callback on chart tap). Take a look at <a href="#more-complex-example">More complex example</a>                                                               |
-| legacyMode      | bool   | -                                  | Uses Webview from 'react-native' instead of 'react-native-webview'                                                                                                                                                                                                                          |
-| canvas          | bool   | -                                  | Use 'canvas' as renderer instead of 'svg' (default)                                                                                                                                                                                                                                         |
-| backgroundColor | string | rgba(255,101,80,0.4), red, #4287f5 | Set the background color of the chart                                                                                                                                                                                                                                                       |
-
-### Methods / Callbacks
+# Methods / Callbacks
 
 | Name               | Example                                              | Description                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------------ | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -104,7 +77,7 @@ Add the `index.html` from `node_modules/react-native-echarts-wrapper/src/` to yo
 | onData             | `<ECharts onData={this.onData} />`                   | This is the only way to receive data from the chart. It is called with the data provided by sendData (Webview functions).                                                                                                                                                                                                                                                                              |
 | setBackgroundColor | `this.chart.setBackgroundColor('#ecf542');`          | Allows you to set the background color of the chart.                                                                                                                                                                                                                                                                                                                                                   |
 
-### Webview functions
+# Webview functions
 
 These functions can be called from code injected with `additionalCode` or within the echarts option.
 
@@ -112,18 +85,18 @@ These functions can be called from code injected with `additionalCode` or within
 | -------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | sendData | `sendData('Hello World')` | With this function you can communicate with React Native. **Attention** you can only send strings over to React-Native. `sendData('Hello World')` will call `onData` on the React Native side. Take a look at <a href="#more-complex-example">More complex example</a> |
 
-### Webview variables
+# Webview variables
 
 | Name  | Example          | Description                                                                                                                                                                             |
 | ----- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | chart | `chart.on(....)` | Allows you to access the echarts api (https://ecomfe.github.io/echarts-doc/public/en/api.html#echartsInstance). Take a look at <a href="#more-complex-example">More complex example</a> |
 
-### Simple example
+## Simple example
 
 ```js
-import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
-import { ECharts } from "react-native-echarts-wrapper";
+import React, { Component } from "react"
+import { StyleSheet, View } from "react-native"
+import { ECharts } from "react-native-echarts-wrapper"
 
 export default class App extends Component {
   option = {
@@ -140,7 +113,7 @@ export default class App extends Component {
         type: "line"
       }
     ]
-  };
+  }
 
   render() {
     return (
@@ -150,7 +123,7 @@ export default class App extends Component {
           backgroundColor="rgba(93, 169, 81, 0.3)"
         />
       </View>
-    );
+    )
   }
 }
 
@@ -158,15 +131,15 @@ const styles = StyleSheet.create({
   chartContainer: {
     flex: 1
   }
-});
+})
 ```
 
-### More complex example
+## More complex example
 
 ```js
-import React, { Component } from "react";
-import { StyleSheet, SafeAreaView, Button } from "react-native";
-import { ECharts } from "react-native-echarts-wrapper";
+import React, { Component } from "react"
+import { StyleSheet, SafeAreaView, Button } from "react-native"
+import { ECharts } from "react-native-echarts-wrapper"
 
 export default class App extends Component {
   option = {
@@ -183,7 +156,7 @@ export default class App extends Component {
         type: "line"
       }
     ]
-  };
+  }
 
   additionalCode = `
         chart.on('click', function(param) {
@@ -194,25 +167,25 @@ export default class App extends Component {
 
             sendData(JSON.stringify(obj));
         });
-    `;
+    `
 
   onData = param => {
-    const obj = JSON.parse(param);
+    const obj = JSON.parse(param)
 
     if (obj.type === "event_clicked") {
-      alert(`you tapped the chart series: ${obj.data}`);
+      alert(`you tapped the chart series: ${obj.data}`)
     }
-  };
+  }
 
   onRef = ref => {
     if (ref) {
-      this.chart = ref;
+      this.chart = ref
     }
-  };
+  }
 
   onButtonClearPressed = () => {
-    this.chart.clear();
-  };
+    this.chart.clear()
+  }
 
   render() {
     return (
@@ -225,11 +198,11 @@ export default class App extends Component {
           additionalCode={this.additionalCode}
           onData={this.onData}
           onLoadEnd={() => {
-            this.chart.setBackgroundColor("rgba(93, 169, 81, 0.1)");
+            this.chart.setBackgroundColor("rgba(93, 169, 81, 0.1)")
           }}
         />
       </SafeAreaView>
-    );
+    )
   }
 }
 
@@ -238,44 +211,44 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F5FCFF"
   }
-});
+})
 ```
 
-### Dynamic loading example
+## Dynamic loading example
 
 ```js
-import React, { Component } from "react";
-import { StyleSheet, SafeAreaView, Button } from "react-native";
-import { ECharts } from "react-native-echarts-wrapper";
+import React, { Component } from "react"
+import { StyleSheet, SafeAreaView, Button } from "react-native"
+import { ECharts } from "react-native-echarts-wrapper"
 
 export default class App extends Component {
   onRef = ref => {
     if (ref) {
-      this.chart = ref;
+      this.chart = ref
     }
-  };
+  }
 
-  onData = param => {};
+  onData = param => {}
 
   initChart = () => {
     function randomData() {
-      now = new Date(+now + oneDay);
-      value = value + Math.random() * 21 - 10;
+      now = new Date(+now + oneDay)
+      value = value + Math.random() * 21 - 10
       return {
         name: now.toString(),
         value: [
           [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
           Math.round(value)
         ]
-      };
+      }
     }
 
-    var data = [];
-    var now = +new Date(1997, 9, 3);
-    var oneDay = 24 * 3600 * 1000;
-    var value = Math.random() * 1000;
+    var data = []
+    var now = +new Date(1997, 9, 3)
+    var oneDay = 24 * 3600 * 1000
+    var value = Math.random() * 1000
     for (var i = 0; i < 1000; i++) {
-      data.push(randomData());
+      data.push(randomData())
     }
 
     option = {
@@ -285,8 +258,8 @@ export default class App extends Component {
       tooltip: {
         trigger: "axis",
         formatter: function(params) {
-          params = params[0];
-          var date = new Date(params.name);
+          params = params[0]
+          var date = new Date(params.name)
           return (
             date.getDate() +
             "/" +
@@ -295,7 +268,7 @@ export default class App extends Component {
             date.getFullYear() +
             " : " +
             params.value[1]
-          );
+          )
         },
         axisPointer: {
           animation: false
@@ -322,29 +295,29 @@ export default class App extends Component {
           data: data
         }
       ]
-    };
+    }
 
-    this.chart.setOption(option);
+    this.chart.setOption(option)
 
     //no query parameter: whole option object
     this.chart.getOption(option => {
-      console.log(option);
-    });
+      console.log(option)
+    })
 
     //with query parameter
     this.chart.getOption(
       option => {
-        console.log(option);
+        console.log(option)
       },
       ["dataZoom", "series"]
-    );
+    )
 
-    const instance = this.chart;
+    const instance = this.chart
 
     setInterval(function() {
       for (var i = 0; i < 5; i++) {
-        data.shift();
-        data.push(randomData());
+        data.shift()
+        data.push(randomData())
       }
 
       instance.setOption({
@@ -353,9 +326,9 @@ export default class App extends Component {
             data: data
           }
         ]
-      });
-    }, 100);
-  };
+      })
+    }, 100)
+  }
 
   render() {
     return (
@@ -369,7 +342,7 @@ export default class App extends Component {
           onData={this.onData}
         />
       </SafeAreaView>
-    );
+    )
   }
 }
 
@@ -378,8 +351,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F5FCFF"
   }
-});
+})
 ```
+
+## [2.0.0] - Thursday, 03.October 2019
+
+### Breaking Changes
+
+- removed property canvas (canvas renderer default)
+- removed legacyMode (<a href="https://github.com/react-native-community/react-native-webview">react-native-webview</a> required)
+- removed baseUrl
+
+### Added
+
+- customTemplatePath prop allows to set the path to a custom html-file (template: node_modules/react-native-echarts-wrapper/dist/index.html)
+
+### Fixed
+
+- Tried to register two views with the same name RNCWebView? (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/35" target="_blank">#35</a>)
+- Got rejected from Apple review (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/31" target="_blank">#31</a>)
+- usage on expo as there is no android_asset folder (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/19" target="_blank">#19</a>)
+- cannot use '\n' in custom format text (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/14" target="_blank">#14</a>)
 
 ## [1.4.5] - Saturday, 17.August 2019
 
