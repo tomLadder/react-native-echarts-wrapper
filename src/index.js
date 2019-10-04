@@ -154,23 +154,23 @@ class ECharts extends Component {
         html: this.html,
         baseUrl: ""
       };
-
-      return (
-        <View style={{ flex: 1 }}>
-          <WebView
-            ref={this.getWebViewRef}
-            originWhitelist={["*"]}
-            scrollEnabled={false}
-            source={source}
-            onMessage={this.onMessage}
-            allowFileAccess
-            allowUniversalAccessFromFileURLs
-            mixedContentMode="always"
-            onLoadEnd={this.onLoadEnd}
-          />
-        </View>
-      );
     }
+
+    return (
+      <View style={{ flex: 1 }}>
+        <WebView
+          ref={this.getWebViewRef}
+          originWhitelist={["*"]}
+          scrollEnabled={false}
+          source={source}
+          onMessage={this.onMessage}
+          allowFileAccess
+          allowUniversalAccessFromFileURLs
+          mixedContentMode="always"
+          onLoadEnd={this.onLoadEnd}
+        />
+      </View>
+    );
   }
 }
 
