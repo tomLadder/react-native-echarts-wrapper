@@ -5,8 +5,17 @@ import { ECharts } from "../index";
 
 describe("index", () => {
   it("rendering works", () => {
-    const jsx = <ECharts />;
-    render(jsx);
+    const onLoadEnd = jest.fn();
+    const jsx = <ECharts onLoadEnd={onLoadEnd} />;
+    const renderer = render(jsx);
+    const echarts = renderer.getByType(ECharts);
+    const injectJavaScript = jest.fn();
+    echarts.instance.webview = {
+      injectJavaScript
+    };
+    echarts.instance.onLoadEnd();
+    expect(injectJavaScript).toBeCalled();
+    expect(onLoadEnd).toBeCalled();
   });
 
   it("clear works", () => {
@@ -33,6 +42,16 @@ describe("index", () => {
     expect(echarts.instance.postMessage).toBeCalledWith(
       expect.objectContaining({
         properties: undefined,
+        types: "GET_OPTION",
+        uuid: expect.any(String)
+      })
+    );
+
+    echarts.instance.getOption(() => {}, "test");
+
+    expect(echarts.instance.postMessage).toBeCalledWith(
+      expect.objectContaining({
+        properties: "test",
         types: "GET_OPTION",
         uuid: expect.any(String)
       })
@@ -83,6 +102,7 @@ describe("index", () => {
     const echarts = renderer.getByType(ECharts);
 
     echarts.instance.onMessage("test");
+    expect(echarts.instance.onMessage(undefined)).toBeNull();
 
     expect(console.log).toBeCalled();
   });
@@ -126,7 +146,9 @@ describe("index", () => {
 
   it("onMessage (DATA) works", () => {
     const onData = jest.fn();
-    const jsx = <ECharts onData={onData} />;
+    const jsx = (
+      <ECharts customTemplatePath="somepath/index.html" onData={onData} />
+    );
     const renderer = render(jsx);
 
     const echarts = renderer.getByType(ECharts);
