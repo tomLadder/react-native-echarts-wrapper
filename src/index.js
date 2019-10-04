@@ -132,8 +132,19 @@ class ECharts extends Component {
   }
 
   getWebViewRef = ref => {
-    this.webview = ref
-  }
+    this.webview = ref;
+
+    if (this.webview) {
+      this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
+    }
+  };
+
+  onLoadEnd = () => {
+    if (this.webview) {
+      this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
+    }
+    this.props.onLoadEnd();
+  };
 
   render() {
     let source = {}
@@ -156,12 +167,12 @@ class ECharts extends Component {
           originWhitelist={["*"]}
           scrollEnabled={false}
           source={source}
-          injectedJavaScript={jsBuilder.getJavascriptSource(this.props)}
           onMessage={this.onMessage}
           allowFileAccess
           allowUniversalAccessFromFileURLs
           mixedContentMode="always"
           onLoadEnd={this.props.onLoadEnd}
+          onLoadEnd={this.onLoadEnd}
         />
       </View>
     )

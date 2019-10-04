@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## [2.0.0] - Thursday, 03.October 2019
 
 ### Breaking Changes
@@ -16,6 +17,13 @@
 - Got rejected from Apple review (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/31" target="_blank">#31</a>)
 - usage on expo as there is no android_asset folder (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/19" target="_blank">#19</a>)
 - cannot use '\n' in custom format text (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/14" target="_blank">#14</a>)
+=======
+## [1.4.7] - Thursday, 12.September 2019
+
+### Fixed
+
+- Variables and functions from injectedJavaScript not available on Android (<a href="https://github.com/react-native-community/react-native-webview/issues/554" target="_blank">see react-native issue</a>)
+>>>>>>> master
 
 ## [1.4.5] - Saturday, 17.August 2019
 
