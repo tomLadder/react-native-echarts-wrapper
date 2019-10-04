@@ -133,10 +133,6 @@ class ECharts extends Component {
 
   getWebViewRef = ref => {
     this.webview = ref;
-
-    if (this.webview) {
-      this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
-    }
   };
 
   onLoadEnd = () => {
@@ -171,7 +167,6 @@ class ECharts extends Component {
           allowFileAccess
           allowUniversalAccessFromFileURLs
           mixedContentMode="always"
-          onLoadEnd={this.props.onLoadEnd}
           onLoadEnd={this.onLoadEnd}
         />
       </View>
