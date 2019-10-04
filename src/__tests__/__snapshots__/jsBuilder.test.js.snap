@@ -1,112 +1,107 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`jsBuilder convertToPostMessageString works 1`] = `"{\\"test\\":\\"hello world\\",\\"func\\":\\"function func() {\\\\n        alert('hello');\\\\n      }\\"}"`;
+exports[`jsBuilder convertToPostMessageString works 1`] = `"{\\"test\\":\\"hello world\\"}"`;
 
 exports[`jsBuilder getJavascriptSource works 1`] = `
 "
-          var chart = echarts.init(document.getElementById('main'), undefined, {renderer: 'svg'});
-          chart.setOption({\\"xAxis\\":{\\"type\\":\\"category\\",\\"data\\":[\\"Mon\\",\\"Tue\\",\\"Wed\\",\\"Thu\\",\\"Fri\\",\\"Sat\\",\\"Sun\\"]},\\"yAxis\\":{\\"type\\":\\"value\\"},\\"series\\":[{\\"data\\":[820,932,901,934,1290,1330,1320],\\"type\\":\\"line\\"}]});
-          setBackgroundColor(\\"undefined\\");
-  
-          if(undefined == false) {
-              window.postMessage = function(data) {
-                  window.ReactNativeWebView.postMessage(data);
+             var chart = echarts.init(document.getElementById('main'), undefined, {renderer: 'canvas'});
+            chart.setOption(parse(decodeURI(\\"%7B%22xAxis%22:%7B%22type%22:%22category%22,%22data%22:%5B%22Mon%22,%22Tue%22,%22Wed%22,%22Thu%22,%22Fri%22,%22Sat%22,%22Sun%22%5D%7D,%22yAxis%22:%7B%22type%22:%22value%22%7D,%22series%22:%5B%7B%22data%22:%5B820,932,901,934,1290,1330,1320%5D,%22type%22:%22line%22%7D%5D%7D\\")));
+             setBackgroundColor(\\"undefined\\");
+
+             function setBackgroundColor(color) {
+                document.getElementById('main').style.backgroundColor = color;
+              }
+      
+              function sendData(data) {
+                  window.ReactNativeWebView.postMessage(JSON.stringify({\\"types\\":\\"DATA\\",\\"payload\\": data}));
+              }
+      
+              function sendCallbackData(uuid, data) {
+                  window.ReactNativeWebView.postMessage(JSON.stringify({\\"types\\":\\"CALLBACK\\", \\"uuid\\": uuid, \\"payload\\": data}));
+              }
+      
+              function getOS() {
+                  return ios;
+              }
+      
+              function parse (data) {
+                  return JSON.parse(data, function (key, value) {
+      
+                      if (value
+                          && typeof value === \\"string\\"
+                          && value.substr(0,8) === \\"function\\") {
+
+                          var startBody = value.indexOf('{') + 1;
+                          var endBody = value.lastIndexOf('}');
+                          var startArgs = value.indexOf('(') + 1;
+                          var endArgs = value.indexOf(')');
+      
+                          return new Function(value.substring(startArgs, endArgs)
+                                            , value.substring(startBody, endBody));
+                      }
+                      return value;
+                  });
+              }
+      
+              function toString (obj) {
+                  var result = JSON.stringify(obj, function (key, val) {
+                    if (typeof val === 'function') {
+                      return val.toString();
+                    }
+                    return val;
+                  });
+      
+                  return result;
               };
-          }
-
-          function setBackgroundColor(color) {
-            document.getElementById('main').style.backgroundColor = color;
-          }
-  
-          function sendData(data) {
-              window.postMessage(JSON.stringify({\\"types\\":\\"DATA\\",\\"payload\\": data}));
-          }
-  
-          function sendCallbackData(uuid, data) {
-              window.postMessage(JSON.stringify({\\"types\\":\\"CALLBACK\\", \\"uuid\\": uuid, \\"payload\\": data}));
-          }
-  
-          function getOS() {
-              return ios;
-          }
-  
-          function parse (data) {
-              return JSON.parse(data, function (key, value) {
-  
-                  if (value
-                      && typeof value === \\"string\\"
-                      && value.substr(0,8) == \\"function\\") {
-                      var startBody = value.indexOf('{') + 1;
-                      var endBody = value.lastIndexOf('}');
-                      var startArgs = value.indexOf('(') + 1;
-                      var endArgs = value.indexOf(')');
-  
-                      return new Function(value.substring(startArgs, endArgs)
-                                        , value.substring(startBody, endBody));
-                  }
-                  return value;
-              });
-          }
-  
-          function toString (obj) {
-              var result = JSON.stringify(obj, function (key, val) {
-                if (typeof val === 'function') {
-                  return val.toString();
+      
+              window.onresize = function() {
+                  chart.resize();
+              };
+      
+              function processMessage (e) {
+                var req = parse(e.data);
+      
+                switch(req.types) {
+                  case \\"SET_OPTION\\":
+                    chart.setOption(req.payload.option, req.payload.notMerge,req.payload.lazyUpate);
+                    break;
+                  case \\"CLEAR\\":
+                    chart.clear();
+                    break;
+                  case \\"SET_BACKGROUND_COLOR\\":
+                    setBackgroundColor(req.color);
+                    break;
+                  case \\"GET_OPTION\\":
+                    var option = chart.getOption();
+                    var data = {};
+    
+                    if(req.properties !== undefined) {
+                        req.properties.forEach(function (prop) {
+                          data[prop] = option[prop];
+                        });
+                    } else {
+                        var data = {
+                            option: option
+                         };
+                    }
+    
+                    sendCallbackData(req.uuid, data);
+                    break;
+                  default:
+                    break;
                 }
-                return val;
+              }
+      
+              window.document.addEventListener('message', function(e) {
+                processMessage(e);
               });
-  
-              return result;
-          };
-  
-          window.onresize = function() {
-              chart.resize();
-          };
-  
-          function processMessage (e) {
-            var req = parse(e.data);
-  
-            switch(req.types) {
-              case \\"SET_OPTION\\":
-                chart.setOption(req.payload.option, req.payload.notMerge,req.payload.lazyUpate);
-                break;
-              case \\"CLEAR\\":
-                chart.clear();
-                break;
-              case \\"SET_BACKGROUND_COLOR\\":
-                setBackgroundColor(req.color);
-                break;
-              case \\"GET_OPTION\\":
-                var option = chart.getOption();
-                var data = {};
+    
+              window.addEventListener('message', function(e) {
+                processMessage(e);
+              });
 
-                if(req.properties !== undefined) {
-                    req.properties.forEach(function (prop) {
-                      data[prop] = option[prop];
-                    });
-                } else {
-                    var data = {
-                        option: option
-                     };
-                }
-
-                sendCallbackData(req.uuid, data);
-                break;
-              default:
-                break;
-            }
-          }
-  
-          window.document.addEventListener('message', function(e) {
-            processMessage(e);
-          });
-
-          window.addEventListener('message', function(e) {
-            processMessage(e);
-          });
-  
-          undefined
-      "
+              undefined
+        "
 `;
 
-exports[`jsBuilder toString works 1`] = `"{\\"test\\":\\"hello world\\",\\"func\\":function func() {        alert('hello');      }}"`;
+exports[`jsBuilder toString works 1`] = `"{\\"test\\":\\"hello world\\",\\"func\\":\\"function func() {\\\\n        alert('hello');\\\\n      }\\"}"`;

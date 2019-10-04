@@ -1,3 +1,22 @@
+## [2.0.0] - Thursday, 03.October 2019
+
+### Breaking Changes
+
+- removed property canvas (canvas renderer default)
+- removed legacyMode (<a href="https://github.com/react-native-community/react-native-webview">react-native-webview</a> required)
+- removed baseUrl
+
+### Added
+
+- customTemplatePath prop allows to set the path to a custom html-file (template: node_modules/react-native-echarts-wrapper/dist/index.html)
+
+### Fixed
+
+- Tried to register two views with the same name RNCWebView? (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/35" target="_blank">#35</a>)
+- Got rejected from Apple review (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/31" target="_blank">#31</a>)
+- usage on expo as there is no android_asset folder (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/19" target="_blank">#19</a>)
+- cannot use '\n' in custom format text (<a href="https://github.com/tomLadder/react-native-echarts-wrapper/issues/14" target="_blank">#14</a>)
+
 ## [1.4.7] - Thursday, 12.September 2019
 
 ### Fixed

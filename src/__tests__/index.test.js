@@ -1,16 +1,16 @@
-import React from 'react';
-import { render } from 'react-native-testing-library';
+import React from "react";
+import { render } from "react-native-testing-library";
 
-import { ECharts } from '../index';
+import { ECharts } from "../index";
 
-describe('index', () => {
-  it('rendering works', () => {
-    const jsx = <ECharts baseUrl="something" />;
+describe("index", () => {
+  it("rendering works", () => {
+    const jsx = <ECharts />;
     render(jsx);
   });
 
-  it('clear works', () => {
-    const jsx = <ECharts baseUrl="something" />;
+  it("clear works", () => {
+    const jsx = <ECharts />;
     const renderer = render(jsx);
 
     const echarts = renderer.getByType(ECharts);
@@ -18,12 +18,12 @@ describe('index', () => {
     echarts.instance.clear();
 
     expect(echarts.instance.webview.postMessage).toBeCalledWith(
-      '{"types":"CLEAR"}',
+      '{"types":"CLEAR"}'
     );
   });
 
-  it('getOption works', () => {
-    const jsx = <ECharts baseUrl="something" />;
+  it("getOption works", () => {
+    const jsx = <ECharts />;
     const renderer = render(jsx);
 
     const echarts = renderer.getByType(ECharts);
@@ -33,19 +33,19 @@ describe('index', () => {
     expect(echarts.instance.postMessage).toBeCalledWith(
       expect.objectContaining({
         properties: undefined,
-        types: 'GET_OPTION',
-        uuid: expect.any(String),
-      }),
+        types: "GET_OPTION",
+        uuid: expect.any(String)
+      })
     );
   });
 
-  it('setOption works', () => {
-    const jsx = <ECharts baseUrl="something" />;
+  it("setOption works", () => {
+    const jsx = <ECharts />;
     const renderer = render(jsx);
 
     const echarts = renderer.getByType(ECharts);
     echarts.instance.postMessage = jest.fn();
-    echarts.instance.setOption({ test: '12345' });
+    echarts.instance.setOption({ test: "12345" });
 
     expect(echarts.instance.postMessage).toBeCalledWith(
       expect.objectContaining({
@@ -53,44 +53,44 @@ describe('index', () => {
           lazyUpdate: false,
           notMerge: false,
           option: {
-            test: '12345',
-          },
+            test: "12345"
+          }
         }),
-        types: 'SET_OPTION',
-      }),
+        types: "SET_OPTION"
+      })
     );
   });
 
-  it('setBackgroundColor works', () => {
+  it("setBackgroundColor works", () => {
     const jsx = <ECharts baseUrl="something" backgroundColor="red" />;
     const renderer = render(jsx);
     const echarts = renderer.getByType(ECharts);
 
     echarts.instance.postMessage = jest.fn();
-    echarts.instance.setBackgroundColor('orange');
+    echarts.instance.setBackgroundColor("orange");
     expect(echarts.instance.postMessage).toBeCalledWith({
-      color: 'orange',
-      types: 'SET_BACKGROUND_COLOR',
+      color: "orange",
+      types: "SET_BACKGROUND_COLOR"
     });
   });
 
-  it('onMessage error', () => {
+  it("onMessage error", () => {
     global.console = { log: jest.fn() };
 
-    const jsx = <ECharts baseUrl="something" />;
+    const jsx = <ECharts />;
     const renderer = render(jsx);
 
     const echarts = renderer.getByType(ECharts);
 
-    echarts.instance.onMessage('test');
+    echarts.instance.onMessage("test");
 
     expect(console.log).toBeCalled();
   });
 
-  it('no baseUrl works', () => {
-    jest.mock('Platform', () => {
-      const Platform = require.requireActual('Platform');
-      Platform.OS = 'android';
+  it("no baseUrl works", () => {
+    jest.mock("Platform", () => {
+      const Platform = require.requireActual("Platform");
+      Platform.OS = "android";
       return Platform;
     });
 
@@ -98,50 +98,50 @@ describe('index', () => {
     render(jsx);
   });
 
-  it('onMessage (CALLBACK) works', () => {
-    const jsx = <ECharts baseUrl="something" />;
+  it("onMessage (CALLBACK) works", () => {
+    const jsx = <ECharts />;
     const renderer = render(jsx);
 
     const echarts = renderer.getByType(ECharts);
-    echarts.instance.callbacks['1234'] = jest.fn();
+    echarts.instance.callbacks["1234"] = jest.fn();
 
     const obj = {
-      types: 'CALLBACK',
-      uuid: '1234',
+      types: "CALLBACK",
+      uuid: "1234",
       payload: {
-        somevalue: 'helloworld',
-      },
+        somevalue: "helloworld"
+      }
     };
 
     echarts.instance.onMessage({
       nativeEvent: {
-        data: JSON.stringify(obj),
-      },
+        data: JSON.stringify(obj)
+      }
     });
 
-    expect(echarts.instance.callbacks['1234']).toBeCalledWith({
-      somevalue: 'helloworld',
+    expect(echarts.instance.callbacks["1234"]).toBeCalledWith({
+      somevalue: "helloworld"
     });
   });
 
-  it('onMessage (DATA) works', () => {
+  it("onMessage (DATA) works", () => {
     const onData = jest.fn();
-    const jsx = <ECharts baseUrl="something" onData={onData} />;
+    const jsx = <ECharts onData={onData} />;
     const renderer = render(jsx);
 
     const echarts = renderer.getByType(ECharts);
 
     const obj = {
-      types: 'DATA',
+      types: "DATA",
       payload: {
-        somevalue: 'helloworld',
-      },
+        somevalue: "helloworld"
+      }
     };
 
     echarts.instance.onMessage({
       nativeEvent: {
-        data: JSON.stringify(obj),
-      },
+        data: JSON.stringify(obj)
+      }
     });
 
     expect(onData).toBeCalledWith(obj.payload);

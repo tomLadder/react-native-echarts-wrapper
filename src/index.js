@@ -1,33 +1,22 @@
-import React, { Component } from 'react';
-import { View, Platform } from 'react-native';
-import PropTypes from 'prop-types';
-/* eslint-enable */
+import React, { Component } from "react";
+import { View } from "react-native";
+import PropTypes from "prop-types";
+import { WebView } from "react-native-webview";
 
-import * as jsBuilder from './jsBuilder';
-
-/* eslint-disable */
-var WebView;
-var WebViewExternalPackage;
-try {
-  WebView = require("react-native").WebView;
-} catch (err) {}
-
-try {
-  WebViewExternalPackage = require("react-native-webview").WebView;
-} catch (err) {}
+import { getMinifiedEChartsFramework } from "./chartconfig";
+import * as jsBuilder from "./jsBuilder";
 
 class ECharts extends Component {
   static propTypes = {
     onData: PropTypes.func,
-    baseUrl: PropTypes.string,
     legacyMode: PropTypes.bool,
     canvas: PropTypes.bool,
     onLoadEnd: PropTypes.func,
-    backgroundColor: PropTypes.string
+    backgroundColor: PropTypes.string,
+    customTemplatePath: PropTypes.string
   };
 
   static defaultProps = {
-    baseUrl: "",
     onData: () => {},
     legacyMode: false,
     canvas: false,
@@ -39,34 +28,37 @@ class ECharts extends Component {
     super(props);
     this.onGetHeight = null;
     this.callbacks = {};
-    const { baseUrl } = props;
 
     this.html = `
       <!DOCTYPE html>
       <html lang="de">
-
-      <head>
-          <meta http-equiv="content-type" content="text/html; charset=utf-8">
-          <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
-          <style type="text/css">
-            html,body {
-              height: 100%;
-              width: 100%;
-              margin: 0;
-              padding: 0;
-              background-color:rgba(0, 0, 0, 0);
-            }
-            #main {
-              height: 100%;
-              background-color:rgba(0, 0, 0, 0);
-            }
+        <head>
+            <meta http-equiv="content-type" content="text/html; charset=utf-8">
+            <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+            <style type="text/css">
+                html,body {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                background-color:rgba(0, 0, 0, 0);
+                }
+                #main {
+                height: 100%;
+                width: 100%;
+                background-color:rgba(0, 0, 0, 0);
+                }
             </style>
-            <script src="${baseUrl}/echarts.min.js"></script>
-          </head>
+            
+            <script>
+                ${getMinifiedEChartsFramework()}
+            </script>
+        </head>
 
-      <body>
-          <div id="main"></div>
-      </body>
+        <body>
+            <div id="main">
+            </div>
+        </body>
 
       </html>`;
   }
@@ -141,10 +133,6 @@ class ECharts extends Component {
 
   getWebViewRef = ref => {
     this.webview = ref;
-
-    if (this.webview) {
-      this.webview.injectJavaScript(jsBuilder.getJavascriptSource(this.props));
-    }
   };
 
   onLoadEnd = () => {
@@ -155,35 +143,22 @@ class ECharts extends Component {
   };
 
   render() {
-    let source;
-    const { baseUrl, legacyMode } = this.props;
+    let source = {};
 
-    if (baseUrl) {
+    if (this.props.customTemplatePath) {
       source = {
-        html: this.html,
-        baseUrl
+        uri: this.props.customTemplatePath
       };
     } else {
-      /* eslint-disable global-require */
-      source =
-        Platform.OS === "ios"
-          ? require("./index.html")
-          : { uri: "file:///android_asset/index.html" };
-      /* eslint-enable global-require */
-    }
+      source = {
+        html: this.html,
+        baseUrl: ""
+      };
 
-    let isExpo = false;
-
-    if (typeof Expo !== "undefined" && Expo.Constants) {
-      isExpo = Expo.Constants.appOwnership === "expo";
-    }
-
-    return (
-      <View style={{ flex: 1 }}>
-        {legacyMode ? (
+      return (
+        <View style={{ flex: 1 }}>
           <WebView
             ref={this.getWebViewRef}
-            useWebKit={isExpo}
             originWhitelist={["*"]}
             scrollEnabled={false}
             source={source}
@@ -193,22 +168,9 @@ class ECharts extends Component {
             mixedContentMode="always"
             onLoadEnd={this.onLoadEnd}
           />
-        ) : (
-          <WebViewExternalPackage
-            ref={this.getWebViewRef}
-            useWebKit={isExpo}
-            originWhitelist={["*"]}
-            scrollEnabled={false}
-            source={source}
-            onMessage={this.onMessage}
-            allowFileAccess
-            allowUniversalAccessFromFileURLs
-            mixedContentMode="always"
-            onLoadEnd={this.onLoadEnd}
-          />
-        )}
-      </View>
-    );
+        </View>
+      );
+    }
   }
 }
 
