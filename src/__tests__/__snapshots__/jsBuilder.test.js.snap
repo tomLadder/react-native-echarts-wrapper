@@ -4,7 +4,7 @@ exports[`jsBuilder convertToPostMessageString works 1`] = `"{\\"test\\":\\"hello
 
 exports[`jsBuilder getJavascriptSource works 1`] = `
 "
-             var chart = echarts.init(document.getElementById('main'), undefined, {renderer: 'svg'});
+             var chart = echarts.init(document.getElementById('main'), undefined, {renderer: 'canvas'});
             chart.setOption(parse(decodeURI(\\"%7B%22xAxis%22:%7B%22type%22:%22category%22,%22data%22:%5B%22Mon%22,%22Tue%22,%22Wed%22,%22Thu%22,%22Fri%22,%22Sat%22,%22Sun%22%5D%7D,%22yAxis%22:%7B%22type%22:%22value%22%7D,%22series%22:%5B%7B%22data%22:%5B820,932,901,934,1290,1330,1320%5D,%22type%22:%22line%22%7D%5D%7D\\")));
              setBackgroundColor(\\"undefined\\");
 
