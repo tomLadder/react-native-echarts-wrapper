@@ -6,7 +6,7 @@
   <br>
 </p>
 
-<h4 align="center">ECharts wrapper build for <a href="https://facebook.github.io/react-native/" target="_blank">React Native</a>/<a href="https://expo.io/learn" target="_blank">Expo</a>.</h4>
+<h4 align="center">Apache ECharts (incubating) wrapper build for <a href="https://facebook.github.io/react-native/" target="_blank">React Native</a>/<a href="https://expo.io/learn" target="_blank">Expo</a>.</h4>
 
 <p align="center">
   <a>
