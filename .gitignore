@@ -2,3 +2,5 @@ node_modules/
 .DS_Store
 coverage/
 example/node_modules
+.idea
+settings.json

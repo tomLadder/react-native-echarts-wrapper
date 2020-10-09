@@ -5,6 +5,7 @@ import { WebView } from "react-native-webview";
 
 import { getMinifiedEChartsFramework } from "./chartconfig";
 import * as jsBuilder from "./jsBuilder";
+import { getTheme } from "./theme";
 
 class ECharts extends Component {
   static propTypes = {
@@ -52,6 +53,9 @@ class ECharts extends Component {
             
             <script>
                 ${getMinifiedEChartsFramework()}
+            </script>
+                <script>
+                 ${getTheme()}
             </script>
         </head>
 
