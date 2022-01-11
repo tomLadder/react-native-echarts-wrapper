@@ -1,5 +1,5 @@
 {
-  "name": "react-native-echarts-wrapper",
+  "name": "@thinheoh/react-native-echarts-wrapper",
   "version": "2.0.0",
   "description": "📈Powerful React-Native ECharts Wrapper 📊",
   "main": "src/index.js",
