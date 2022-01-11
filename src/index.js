@@ -13,7 +13,9 @@ class ECharts extends Component {
     canvas: PropTypes.bool,
     onLoadEnd: PropTypes.func,
     backgroundColor: PropTypes.string,
-    customTemplatePath: PropTypes.string
+    customTemplatePath: PropTypes.string,
+    webViewStyle: PropTypes.object,
+    renderLoading: PropTypes.func,
   };
 
   static defaultProps = {
@@ -21,7 +23,9 @@ class ECharts extends Component {
     legacyMode: false,
     canvas: false,
     onLoadEnd: () => {},
-    backgroundColor: "rgba(0, 0, 0, 0)"
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    webViewStyle: {},
+    renderLoading: () => <></>,
   };
 
   constructor(props) {
@@ -160,6 +164,7 @@ class ECharts extends Component {
       <View style={{ flex: 1 }}>
         <WebView
           ref={this.getWebViewRef}
+          style={this.props.webViewStyle}
           originWhitelist={["*"]}
           scrollEnabled={false}
           source={source}
@@ -168,6 +173,8 @@ class ECharts extends Component {
           allowUniversalAccessFromFileURLs
           mixedContentMode="always"
           onLoadEnd={this.onLoadEnd}
+          startInLoadingState={true}
+          renderLoading={this.props.renderLoading}
         />
       </View>
     );
