@@ -1,6 +1,6 @@
 {
   "name": "@thinheoh/react-native-echarts-wrapper",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "📈Powerful React-Native ECharts Wrapper 📊",
   "main": "src/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tomLadder/react-native-echarts-wrapper.git"
+    "url": "git+https://github.com/thinh-eoh/react-native-echarts-wrapper.git"
   },
   "keywords": [
     "echarts",
@@ -20,9 +20,9 @@
   "author": "Thomas Leiter",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tomLadder/react-native-echarts-wrapper/issues"
+    "url": "https://github.com/thinh-eoh/react-native-echarts-wrapper/issues"
   },
-  "homepage": "https://github.com/tomLadder/react-native-echarts-wrapper#readme",
+  "homepage": "https://github.com/thinh-eoh/react-native-echarts-wrapper#readme",
   "peerDependencies": {
     "prop-types": ">= 15.7.2",
     "react-native-webview": ">= 5.0.1"
