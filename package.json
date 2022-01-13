@@ -1,6 +1,6 @@
 {
   "name": "@thinheoh/react-native-echarts-wrapper",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "📈Powerful React-Native ECharts Wrapper 📊",
   "main": "src/index.js",
   "scripts": {

@@ -45,12 +45,12 @@ class ECharts extends Component {
                 width: 100%;
                 margin: 0;
                 padding: 0;
-                background-color:rgba(0, 0, 0, 0);
+                background-color:${this.props.backgroundColor};
                 }
                 #main {
                 height: 100%;
                 width: 100%;
-                background-color:rgba(0, 0, 0, 0);
+                background-color:${this.props.backgroundColor};
                 }
             </style>
             
