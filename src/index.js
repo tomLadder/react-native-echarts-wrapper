@@ -168,6 +168,7 @@ class ECharts extends Component {
           allowUniversalAccessFromFileURLs
           mixedContentMode="always"
           onLoadEnd={this.onLoadEnd}
+          androidHardwareAccelerationDisabled
         />
       </View>
     );
